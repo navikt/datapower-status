@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 export default function DomainListModal(props) {
   console.log(props.domains);
   const classes = useStyles();
-  const [domainModal, useDomainModal] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 

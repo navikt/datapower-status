@@ -14,12 +14,10 @@ jobs:
       - uses: "actions/setup-node@v1"
         with:
           node-version: 14
-      - name: "install react dependencies"
-        run: "npm install"
-      - name: "Build with yarn"
-        run: "yarn build"
-      - name: "Install express dependencies"
-        run: "cd server && npm install"
+      - name: "install dependencies an build react"
+        run: "yarn install && yarn build"
+      - name: "setup server"
+        run: "cd server && yarn install"
       - name: "Login to GitHub Docker Registry"
         uses: "docker/login-action@v1"
         with:

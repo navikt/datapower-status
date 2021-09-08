@@ -7,7 +7,7 @@ const statusRoute = require("./routes/status");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(logger("dev"));
+app.use(logger("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
