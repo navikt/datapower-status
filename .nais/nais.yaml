@@ -17,13 +17,6 @@ spec:
     port: 8080
     initialDelay: 20
     timeout: 60
-  replicas:
-    min: 1
-    max: 2
-    cpuThresholdPercentage: 50
-  #prometheus:
-  #  enabled: true
-  #  path: "/metrics"
   resources:
     limits:
       cpu: "200m"
@@ -36,4 +29,4 @@ spec:
     - {{url}}
   {{/each}}
   envFrom:
-    - secret: datapower-status-secret 
+    - secret: datapower-status-secret

@@ -7,9 +7,16 @@ const statusRoute = require("./routes/status");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(logger("tiny"));
+app.use(
+  logger("combined", {
+    skip: function (req, res) {
+      return res.statusCode < 400;
+    },
+  })
+);
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
