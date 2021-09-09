@@ -4,7 +4,7 @@ on:
     branches:
       - "main"
 env:
-  "IMAGE": "ghcr.io/navikt/datapower-status:${ github.sha::8 }"
+  "IMAGE": "ghcr.io/navikt/datapower-status:${{ github.sha }}"
 
 jobs:
   "build":
@@ -16,9 +16,9 @@ jobs:
         with:
           node-version: 14
       - name: "install dependencies an build react"
-        run: "yarn install && yarn build"
+        run: "yarn install --frozen-lockfile && yarn build"
       - name: "setup server"
-        run: "cd server && yarn install"
+        run: "cd server && yarn install --frozen-lockfile --prod"
       - name: Login to GitHub Packages Docker Registry
         uses: docker/login-action@v1
         with:
