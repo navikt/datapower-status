@@ -4,7 +4,7 @@ on:
     branches:
       - "main"
 env:
-  "IMAGE": "ghcr.io/navikt/datapower-status:${{ github.sha::8 }}"
+  "IMAGE": "ghcr.io/navikt/datapower-status:${ github.sha::8 }"
 
 jobs:
   "build":
