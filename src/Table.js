@@ -37,7 +37,9 @@ export default class DataPowerTable extends React.Component {
       return (
         <tr key={dpInstance}>
           <td>
-            <a href={dpInstance}>{dpInstance}</a>
+            <a href={"https://" + dpInstance + ":9090"} target="_blank">
+              {dpInstance}
+            </a>
           </td>
           <td>{Version}</td>
           <td>{State}</td>
