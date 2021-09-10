@@ -1,11 +1,11 @@
 FROM navikt/node-express:14-alpine
 
-WORKDIR /var
+WORKDIR /app
 
-COPY build/ build/
-COPY server/ server/
+#COPY build server node_modules ./
+COPY . ./
 
-WORKDIR /var/server
+#WORKDIR /app/server
 
 EXPOSE 8080
-ENTRYPOINT ["node", "server.js"]
+ENTRYPOINT ["node", "server/server.js"]

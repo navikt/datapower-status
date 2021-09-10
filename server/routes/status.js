@@ -29,7 +29,7 @@ Router.post("/status", function (req, res) {
 
   res.setHeader("Content-Type", "application/json");
   const data = JSON.stringify(req.body, null);
-  console.log(data);
+
   fs.writeFile(path.join("/tmp", "status.json"), data, (err) => {
     if (err) {
       console.error(err);

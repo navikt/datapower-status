@@ -8,11 +8,12 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(
-  logger("combined", {
-    skip: function (req, res) {
-      return res.statusCode < 400;
-    },
-  })
+  //logger("combined", {
+  //  skip: function (req, res) {
+  //    return res.statusCode < 400;
+  //  },
+  //})
+  logger("tiny")
 );
 
 app.use(express.json());
