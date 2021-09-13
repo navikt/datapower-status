@@ -15,13 +15,6 @@ export default class DataPowerTable extends React.Component {
     this.setState({ dpInstances: response.data });
   }
 
-  domainList(domains) {
-    console.log(domains);
-    return domains.map((domain) => {
-      return <li>{domain}</li>;
-    });
-  }
-
   renderTabledata() {
     return this.state.dpInstances.map((instance, index) => {
       const {

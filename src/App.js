@@ -1,16 +1,39 @@
 import React from "react";
 import "./styles.css";
 import DataPowerTable from "./Table.js";
+import IconButton from "@material-ui/core/IconButton";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
 export default class App extends React.Component {
+  state = {
+    refresh: false,
+  };
+
+  handleRefresh() {
+    this.setState((state) => ({ refresh: !state.refresh }));
+  }
+
   render() {
     return (
       <div>
         <image-block>
-          <img src="images/nav-logo-red.svg" alt=""/>
-          <h1>Welcome to DataPower Status</h1>
+          <img src="images/nav-logo-red.svg" alt="" />
+          <h1 class="title">Welcome to DataPower Status</h1>
         </image-block>
-        <DataPowerTable />
+        <div class="content">
+          <IconButton
+            color="primary"
+            aria-label="refresh"
+            component="div"
+            onClick={this.handleRefresh.bind(this)}
+            size="small"
+            edge="end"
+            className="refresh"
+          >
+            <RefreshIcon />
+          </IconButton>
+          <DataPowerTable key={this.state.refresh} />
+        </div>
       </div>
     );
   }
