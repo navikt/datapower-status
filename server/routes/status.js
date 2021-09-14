@@ -2,11 +2,47 @@ const basicAuth = require("express-basic-auth");
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const { Validator } = require("express-json-validator-middleware");
 
 const Router = express.Router();
 const dpSecret = process.env.dpSecret || "supersecret";
-const dpuser = "dpuser";
 
+const statusSchema = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      dpInstance: { type: "string" },
+      State: { type: "string" },
+      Version: { type: "string" },
+      MachineType: { type: "string" },
+      Domains: { type: "array", items: [{ type: "string" }] },
+      uptime: { type: "string" },
+      bootuptime2: { type: "string" },
+    },
+    required: [
+      "dpInstance",
+      "State",
+      "Version",
+      "MachineType",
+      "Domains",
+      "uptime",
+      "bootuptime2",
+    ],
+    additionalProperties: false,
+  },
+};
+
+const { validate } = new Validator();
+
+var RateLimit = require("express-rate-limit");
+var limiter = new RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 50,
+});
+
+// apply rate limiter to all requests
+Router.use(limiter);
 Router.get("/status", function (req, res) {
   fs.readFile(path.join("/tmp", "status.json"), "utf8", (err, data) => {
     if (err) {
@@ -24,7 +60,7 @@ Router.use(
   })
 );
 
-Router.post("/status", function (req, res) {
+Router.post("/status", validate({ body: statusSchema }), function (req, res) {
   if (!req.is("application/json")) res.sendStatus(415);
 
   res.setHeader("Content-Type", "application/json");
