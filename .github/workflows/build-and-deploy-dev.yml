@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE: "ghcr.io/navikt/datapower-status:${{ github.sha }}"
+  IMAGE: ghcr.io/navikt/datapower-status:${{ github.sha }}
 
 jobs:
   "build":
@@ -22,7 +22,7 @@ jobs:
         run: "yarn install --frozen-lockfile --prod"
       - name: build docker image
         run: |
-          docker build --pull --tag ${{ env.IMAGE }}  .
+          docker build --pull --tag ${ IMAGE }  .
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push Docker image
         run: |
-          docker push ${{ env.IMAGE }}
+          docker push ${ IMAGE }
 
   "deployAppToDev":
     name: "Deploy app to dev"
@@ -47,8 +47,8 @@ jobs:
           CLUSTER: "dev-gcp"
           RESOURCE: ".nais/nais.yaml"
           VARS: ".nais/dev.yaml"
-          REF: ${{ env.COMMIT }}
-          IMAGE: ${{ env.IMAGE }}
+          REF: ${ COMMIT }
+          IMAGE: ${ IMAGE }
 
 #  "deployAlertsToDev":
 #    name: "Deploy alerts to dev"
