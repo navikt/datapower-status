@@ -35,14 +35,6 @@ const statusSchema = {
 
 const { validate } = new Validator();
 
-var RateLimit = require("express-rate-limit");
-var limiter = new RateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 50,
-});
-
-// apply rate limiter to all requests
-Router.use(limiter);
 Router.get("/status", function (req, res) {
   fs.readFile(path.join("/tmp", "status.json"), "utf8", (err, data) => {
     if (err) {
