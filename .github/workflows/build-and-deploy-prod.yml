@@ -22,7 +22,7 @@ jobs:
         run: "yarn install --frozen-lockfile --prod"
       - name: build docker image
         run: |
-          docker build --pull --tag ${{ IMAGE }}  .
+          docker build --pull --tag ${{ env.IMAGE }}  .
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push Docker image
         run: |
-          docker push ${{ IMAGE }}
+          docker push ${{ env.IMAGE }}
 
   "deployAppToDev":
     name: "Deploy app to dev"
@@ -46,8 +46,8 @@ jobs:
           CLUSTER: "dev-gcp"
           RESOURCE: ".nais/nais.yaml"
           VARS: ".nais/dev.yaml"
-          REF: ${{ COMMIT }}
-          IMAGE: ${{ IMAGE }}
+          REF: ${{ env.COMMIT }}
+          IMAGE: ${{ env.IMAGE }}
 
   "deployAppToProd":
     name: "Deploy app to prod"
@@ -62,8 +62,8 @@ jobs:
           CLUSTER: "prod-gcp"
           RESOURCE: ".nais/nais.yaml"
           VARS: ".nais/prod.yaml"
-          REF: ${{ COMMIT }}
-          IMAGE: ${{ IMAGE }}
+          REF: ${{ env.COMMIT }}
+          IMAGE: ${{ env.IMAGE }}
 #  "deployAlertsToDev":
 #    name: "Deploy alerts to dev"
 #    needs: "build"
