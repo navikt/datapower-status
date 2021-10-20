@@ -37,7 +37,6 @@ jobs:
     name: "Deploy app to dev"
     needs: "build"
     runs-on: "ubuntu-latest"
-    needs: [build]
     steps:
       - uses: "actions/checkout@v2"
       - name: "Deploy to DEV"
@@ -49,7 +48,6 @@ jobs:
           VARS: ".nais/dev.yaml"
           REF: ${ COMMIT }
           IMAGE: ${ IMAGE }
-
 #  "deployAlertsToDev":
 #    name: "Deploy alerts to dev"
 #    needs: "build"

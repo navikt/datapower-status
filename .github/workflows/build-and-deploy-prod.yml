@@ -2,7 +2,7 @@ name: Build-Deploy-Prod
 on:
   push:
     branches:
-      - 'main'
+      - "main"
 
 env:
   IMAGE: ghcr.io/navikt/datapower-status:${{ github.sha }}
@@ -37,7 +37,6 @@ jobs:
     name: "Deploy app to dev"
     needs: "build"
     runs-on: "ubuntu-latest"
-    needs: [build]
     steps:
       - uses: "actions/checkout@v2"
       - name: "Deploy to DEV"
@@ -54,7 +53,6 @@ jobs:
     name: "Deploy app to prod"
     needs: "deployAppToDev"
     runs-on: "ubuntu-latest"
-    needs: [build]
     steps:
       - uses: "actions/checkout@v2"
       - name: "Deploy to PROD"
@@ -66,7 +64,6 @@ jobs:
           VARS: ".nais/prod.yaml"
           REF: ${ COMMIT }
           IMAGE: ${ IMAGE }
-          
 #  "deployAlertsToDev":
 #    name: "Deploy alerts to dev"
 #    needs: "build"
