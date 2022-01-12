@@ -26,15 +26,6 @@ app.use(express.static("public"));
 app.get("/isAlive", (req, res) => res.sendStatus(200));
 app.get("/isReady", (req, res) => res.sendStatus(200));
 
-var RateLimit = require("express-rate-limit");
-var limiter = new RateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 50,
-});
-
-// apply rate limiter to all requests
-app.use(limiter);
-
 app.use(statusRoute);
 
 // catch 404 and forward to error handler
