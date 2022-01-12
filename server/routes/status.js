@@ -52,20 +52,33 @@ Router.use(
   })
 );
 
-Router.post("/status", validate({ body: statusSchema }), function (req, res) {
-  if (!req.is("application/json")) res.sendStatus(415);
-
-  res.setHeader("Content-Type", "application/json");
-  const data = JSON.stringify(req.body, null);
-
-  fs.writeFile(path.join("/tmp", "status.json"), data, (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    res.json(data);
-  });
+const RateLimit = require("express-rate-limit");
+var limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 50,
 });
+
+// apply rate limiter to all requests
+//app.use(limiter);
+Router.post(
+  "/status",
+  limiter,
+  validate({ body: statusSchema }),
+  function (req, res) {
+    if (!req.is("application/json")) res.sendStatus(415);
+
+    res.setHeader("Content-Type", "application/json");
+    const data = JSON.stringify(req.body, null);
+
+    fs.writeFile(path.join("/tmp", "status.json"), data, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      res.json(data);
+    });
+  }
+);
 
 module.exports = Router;
