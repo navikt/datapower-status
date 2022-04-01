@@ -1,8 +1,8 @@
 import React from "react";
 import "./styles.css";
 import DataPowerTable from "./Table.js";
-import IconButton from "@material-ui/core/IconButton";
-import RefreshIcon from "@material-ui/icons/Refresh";
+import IconButton from "@mui/material/IconButton";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 export default class App extends React.Component {
   state = {
