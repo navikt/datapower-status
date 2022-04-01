@@ -1,7 +1,8 @@
 import React from "react";
 import Modal from "@mui/material/Modal";
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
+import ListAltOutlined from "@mui/icons-material/List";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -18,6 +19,7 @@ function getModalStyle() {
   };
 }
 
+//const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
@@ -46,9 +48,15 @@ export default function DomainListModal(props) {
   };
   return (
     <div>
-      <Button variant="contained" size="small" onClick={handleOpen}>
+      <Button
+        variant="outlined"
+        size="small"
+        onClick={handleOpen}
+        endIcon={<ListAltOutlined />}
+      >
         Domains
       </Button>
+
       <Modal
         open={open}
         onClose={handleClose}
