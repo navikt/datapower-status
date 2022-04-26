@@ -11,7 +11,7 @@
     "@mui/styles": "^5.6.0",
     "@mui/system": "^5.6.0",
     "add": "^2.0.6",
-    "axios": "^0.26.1",
+    "axios": "^0.27.1",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
     "express-json-validator-middleware": "^2.2.1",
