@@ -10,8 +10,14 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    target-branch: "dev"
 
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
+    target-branch: "dev"
+    labels:
+      - "npm dependencies"
+    assignees:
+      - "havtro"
