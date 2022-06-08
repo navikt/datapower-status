@@ -16,7 +16,7 @@ const statusSchema = {
       State: { type: "string" },
       Version: { type: "string" },
       MachineType: { type: "string" },
-      Domains: { type: "array", items: [{ type: "string" }] },
+      Domains: { type: "array", items: { type: "string" } },
       uptime: { type: "string" },
       bootuptime2: { type: "string" },
     },
