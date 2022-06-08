@@ -18,6 +18,9 @@ updates:
       interval: "daily"
     target-branch: "dev"
     labels:
-      - "npm dependencies"
+      - "npm"
+      - "dependencies"
+    reviewers:
+      - "havtro"
     assignees:
       - "havtro"
