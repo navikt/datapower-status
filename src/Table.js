@@ -44,7 +44,7 @@ export default class DataPowerTable extends React.Component {
           <td>{bootuptime2}</td>
           <td>{MachineType}</td>
           <td>
-            <DomainListModal domains={Domains} />
+            <DomainListModal domains={Domains} dpInstance={dpInstance} />
           </td>
         </tr>
       );

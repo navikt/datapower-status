@@ -8,7 +8,6 @@
     "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.0",
-    "@mui/styles": "^5.9.0",
     "@mui/system": "^5.8.3",
     "add": "^2.0.6",
     "axios": "^0.27.2",
@@ -23,13 +22,13 @@
     "yarn": "^1.22.18"
   },
   "devDependencies": {
+    "@babel/core": "^7.x",
+    "@babel/plugin-syntax-flow": "^7.14.5",
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
     "@testing-library/dom": "^8.16.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.x",
-    "@babel/core": "^7.x",
-    "@babel/plugin-syntax-flow": "^7.14.5",
-    "@babel/plugin-transform-react-jsx": "^7.14.9",
     "nodemon": "^2.0.19",
     "react-scripts": "^5.0.1"
   },
