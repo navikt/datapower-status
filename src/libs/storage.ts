@@ -37,14 +37,13 @@ function getStorage() {
             projectId: process.env.GCP_TEAM_PROJECT_ID
         });
     } else {
-        /*         return new Storage({
-                    projectId: process.env.GCP_TEAM_PROJECT_ID,/*
-                    /*            credentials: {
-                                    client_email: process.env.CLIENT_EMAIL,
-                                    private_key: process.env.PRIVATE_KEY,
-                                },*/
+        return new Storage({ projectId: process.env.GCP_TEAM_PROJECT_ID })
+        /*            credentials: {
+                        client_email: process.env.CLIENT_EMAIL,
+                        private_key: process.env.PRIVATE_KEY,
+                    },*/
         /*}); */
-        return new Storage();
+        //return new Storage();
     }
 };
 
@@ -60,10 +59,12 @@ async function getBucket() {
     const storage = getStorage();
     const bucketName = getBucketName();
 
-    const [buckets] = await storage.getBuckets();
-    const foundBucket = buckets.find(({ name }) => name === bucketName);
-    if (!foundBucket) {
-        createBucket(storage);
+    if (inDevelopment) {
+        const [buckets] = await storage.getBuckets();
+        const foundBucket = buckets.find(({ name }) => name === bucketName);
+        if (!foundBucket) {
+            createBucket(storage);
+        }
     }
     const bucket: Bucket = storage.bucket(bucketName);
     return bucket;
