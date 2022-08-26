@@ -37,13 +37,14 @@ function getStorage() {
             projectId: process.env.GCP_TEAM_PROJECT_ID
         });
     } else {
-        return new Storage({
-            projectId: process.env.GCP_TEAM_PROJECT_ID,
-            /*            credentials: {
-                            client_email: process.env.CLIENT_EMAIL,
-                            private_key: process.env.PRIVATE_KEY,
-                        },*/
-        });
+        /*         return new Storage({
+                    projectId: process.env.GCP_TEAM_PROJECT_ID,/*
+                    /*            credentials: {
+                                    client_email: process.env.CLIENT_EMAIL,
+                                    private_key: process.env.PRIVATE_KEY,
+                                },*/
+        /*}); */
+        return new Storage();
     }
 };
 
