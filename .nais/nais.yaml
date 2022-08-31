@@ -41,7 +41,6 @@ spec:
   gcp:
     buckets:
       - name: {{bucketname}}
-        retentionPeriodDays: 30
         lifecycleCondition:
           age: 7
           createdBefore: 2020-01-01
