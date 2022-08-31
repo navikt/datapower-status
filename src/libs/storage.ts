@@ -7,7 +7,6 @@ function getBucketName() {
     const bucketName = process.env.BUCKET_NAME;
     if (!bucketName) {
         console.log("BUCKET_NAME not defined");
-
     }
     return bucketName as string
 
@@ -37,13 +36,7 @@ function getStorage() {
             projectId: process.env.GCP_TEAM_PROJECT_ID
         });
     } else {
-        return new Storage({ projectId: process.env.GCP_TEAM_PROJECT_ID })
-        /*            credentials: {
-                        client_email: process.env.CLIENT_EMAIL,
-                        private_key: process.env.PRIVATE_KEY,
-                    },*/
-        /*}); */
-        //return new Storage();
+        return new Storage({ projectId: process.env.GCP_TEAM_PROJECT_ID });
     }
 };
 
@@ -70,7 +63,6 @@ async function getBucket() {
     return bucket;
 }
 
-
 export async function uploadStatusFile(content: string) {
     console.log("Upload file");
     const bucket = getBucket();
@@ -79,7 +71,6 @@ export async function uploadStatusFile(content: string) {
         .save(content);
     console.log(`${filename} uploaded with contents`)
 }
-
 
 export async function getStatusFileContent() {
     console.debug("getStatusFileContent");
