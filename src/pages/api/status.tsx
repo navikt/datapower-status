@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             } catch (error) {
                 res.status(500).end("Internal error");
             } finally {
-                console.log("Uploaded file")
+                console.log("Uploaded file");
                 res.status(200).json(JSON.parse((await getStatusFileContent())));
             }
 
