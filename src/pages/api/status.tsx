@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     switch (method) {
         case "GET":
-            res.status(200).json(JSON.parse((await getStatusFileContent()).toString()));
+            res.status(200).json(JSON.parse((await getStatusFileContent())));
             break;
 
         case "POST":
@@ -24,10 +24,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 uploadStatusFile(JSON.stringify(req.body, null));
             } catch (error) {
                 res.status(500).end("Internal error");
+            } finally {
+                console.log("Uploaded file")
+                res.status(200).json(JSON.parse((await getStatusFileContent())));
             }
 
-            console.log("Uploaded file")
-            res.status(200).json(JSON.parse((await getStatusFileContent()).toString()));
             break;
         default:
             res.setHeader('Allow', ['GET', 'POST']);
