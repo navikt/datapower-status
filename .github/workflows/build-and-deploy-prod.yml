@@ -13,13 +13,11 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
-      - uses: "actions/setup-node@v3.4.0"
+      - uses: "actions/setup-node@v3.4.1"
         with:
-          node-version: 14
-      - name: "install dependencies an build react"
+          node-version: 18
+      - name: "install dependencies and build application"
         run: "yarn install --frozen-lockfile && yarn build"
-      - name: "setup server"
-        run: "yarn install --frozen-lockfile --prod"
       - name: build docker image
         run: |
           docker build --pull --tag ${{ env.IMAGE }}  .

@@ -8,13 +8,13 @@ metadata:
 spec:
   image: {{image}}
   liveness:
-    path: "/isalive"
-    port: 8080
+    path: "/api/isAlive"
+    port: 3000
     initialDelay: 20
     timeout: 60
   readiness:
-    path: "/isready"
-    port: 8080
+    path: "/api/isReady"
+    port: 3000
     initialDelay: 20
     timeout: 60
   replicas:
@@ -31,5 +31,13 @@ spec:
   {{#each ingresses as |url|}}
     - {{url}}
   {{/each}}
+  port: 3000
   envFrom:
     - secret: datapower-status-secret
+  env:
+    - name: BUCKET_NAME
+      value: {{bucketname}}
+  
+  gcp:
+    buckets:
+      - name: {{bucketname}}

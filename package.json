@@ -1,61 +1,34 @@
 {
   "name": "datapower-status",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "start:dependencies": "docker-compose up --build --remove-orphans fake-gcs-server"
+  },
   "dependencies": {
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@fontsource/roboto": "^4.5.1",
-    "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.9.0",
-    "@mui/system": "^5.8.3",
-    "add": "^2.0.6",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@fontsource/roboto": "^4.5.7",
+    "@google-cloud/storage": "^6.2.3",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/material": "^5.10.3",
+    "@mui/system": "^5.10.3",
     "axios": "^0.27.2",
-    "express": "^4.18.1",
-    "express-basic-auth": "^1.2.0",
-    "express-json-validator-middleware": "^3.0.1",
-    "express-rate-limit": "^6.1.0",
-    "http-errors": "^2.0.0",
-    "morgan": "^1.10.0",
-    "react": "18.x",
-    "react-dom": "18.x",
-    "yarn": "^1.22.18"
+    "next": "12.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@testing-library/dom": "^8.16.0",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^14.x",
     "@babel/core": "^7.x",
-    "@babel/plugin-syntax-flow": "^7.14.5",
-    "@babel/plugin-transform-react-jsx": "^7.14.9",
-    "nodemon": "^2.0.19",
-    "react-scripts": "^5.0.1"
-  },
-  "scripts": {
-    "start": "cd server && node server.js",
-    "dev-start": "yarn run build && (nodemon server/server.js)",
-    "start-client": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "@types/node": "18.7.14",
+    "@types/react": "18.0.18",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5",
+    "typescript": "4.8.2"
   }
 }
