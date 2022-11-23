@@ -15,7 +15,7 @@
     "@fontsource/roboto": "^4.5.7",
     "@google-cloud/storage": "^6.2.3",
     "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.10.3",
+    "@mui/material": "^5.10.15",
     "@mui/system": "^5.10.3",
     "axios": "^0.27.2",
     "next": "12.2.5",
