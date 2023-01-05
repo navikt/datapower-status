@@ -17,7 +17,7 @@
     "@mui/icons-material": "^5.11.x",
     "@mui/material": "^5.11.x",
     "@mui/system": "^5.11.x",
-    "axios": "^0.27.2",
+    "axios": "^1.2.2",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -26,9 +26,9 @@
     "@babel/core": "^7.x",
     "@types/node": "18.11.15",
     "@types/react": "18.0.18",
-    "@types/react-dom": "18.0.6",
-    "eslint": "8.23.0",
-    "eslint-config-next": "12.2.5",
-    "typescript": "4.8.2"
+    "@types/react-dom": "18.0.10",
+    "eslint": "8.31.0",
+    "eslint-config-next": "13.1.1",
+    "typescript": "4.9.4"
   }
 }
