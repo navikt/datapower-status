@@ -16,7 +16,7 @@ function DataPowerTableContent({ data }: Props) {
               <a href={"https://" + dp.dpInstance + ":9090"} target="_blank" rel="noreferrer" > {dp.dpInstance}</a>
             </td >
             <td className={styles.td}>{dp.Version}</td>
-            <td className={styles.td}>{dp.State}</td>
+            <td className={styles.td} id={styles[dp.State]}>{dp.State}</td>
             <td className={styles.td}>{dp.uptime}</td>
             <td className={styles.td}>{dp.bootuptime2}</td>
             <td className={styles.td}>{dp.MachineType}</td>

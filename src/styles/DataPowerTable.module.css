@@ -34,15 +34,10 @@
     text-decoration: underline;
 }
 
-/* .title {
-    margin: 0;
-    margin-left: 1em;
-    line-height: 1.15;
-    font-size: 4rem;
-    display: inline-block;
+#active {
+    color: #ad0000;
 }
 
-.title,
-.description {
-    text-align: center;
-} */
+#standby {
+    color: #007c2e;
+}
