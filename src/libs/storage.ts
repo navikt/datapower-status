@@ -99,7 +99,7 @@ export async function getDomainSyncStatus(domain: string) {
     if ( domain in content && content[domain].versions){
         console.log("found domain versions")
         const versions = content[domain].versions
-        
+        return versions
         // for (const keys, v in versions) {
         //     console.log(keys + " " + v)
         // }
