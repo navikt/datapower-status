@@ -1,6 +1,6 @@
 import DomainListModal from "./DomainListModal";
 import styles from '../styles/DataPowerTable.module.css';
-import { dpInstance } from '../libs/interfaces'
+import { dpInstance } from "../libs/interfaces";
 
 interface Props {
   data: dpInstance[]
