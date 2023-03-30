@@ -34,3 +34,15 @@ export interface dpInstance {
     MachineType: string,
     Domains: string[]
 }
+
+export interface DomainSchema {
+    domain: string,
+    versions: { 
+        [key: string]: DomainVersionSchema
+    }
+}
+
+export interface DomainVersionSchema {
+    host: string,
+    version: string
+}

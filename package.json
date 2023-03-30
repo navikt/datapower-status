@@ -18,14 +18,14 @@
     "@mui/material": "^5.11.x",
     "@mui/system": "^5.11.x",
     "axios": "^1.2.2",
-    "next": "12.2.5",
+    "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.x",
-    "@types/node": "18.11.15",
-    "@types/react": "18.0.18",
+    "@types/node": "18.15.x",
+    "@types/react": "18.0.x",
     "@types/react-dom": "18.0.10",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.1",
