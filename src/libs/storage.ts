@@ -68,7 +68,7 @@ export async function getDomainWithHost(domain: string, host:string) {
 }
 
 export async function saveDomainVersion(domain: string, host: string, version: string) {
-    console.log("saveDomainVersion " + domain)
+    //console.log("saveDomainVersion " + domain)
 
     let content = JSON.parse(await downloadFile(filenameDomains));
     // console.log(content)
@@ -79,7 +79,7 @@ export async function saveDomainVersion(domain: string, host: string, version: s
         content[domain] =  {versions: {}};
         content[domain].versions[host] = version;
     }
-    console.log(content[domain])
+    //console.log(content[domain])
     saveFile(filenameDomains, JSON.stringify(content));
 }
 
@@ -88,14 +88,14 @@ export async function deleteHostFromDomain(domain: string, host:string) {
     if ( domain in content && (host in content[domain].versions)){
         delete content[domain].versions[host];
     }
-    console.log(content)
+    //console.log(content)
     saveFile(filenameDomains, JSON.stringify(content));
 }
 
 export async function getDomainSyncStatus(domain: string) {
-    console.log(domain)
+    //console.log(domain)
     let content = JSON.parse(await downloadFile(filenameDomains));;
-    console.log(content[domain].versions)
+    //console.log(content[domain].versions)
     if ( domain in content && content[domain].versions){
         console.log("found domain versions")
         const versions = content[domain].versions

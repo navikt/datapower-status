@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case "GET":
             const content = await getDomainWithHost(domain, host)
             if (content) {
-                console.log(content)
+                //console.log(content)
                 res.status(200).json(content);
             } else {
                 console.log("Domain or host not exist")
@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 break;
             }
             deleteHostFromDomain(domain, host);
-            console.log("DELETEing %s from %s", host, domain);
+            //console.log("DELETEing %s from %s", host, domain);
             res.end();
             break;
         default:
