@@ -1,4 +1,3 @@
-import { type } from "os";
 
 export type statusSchema = {
     type: "array",

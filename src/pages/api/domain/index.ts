@@ -12,7 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(200).json(domain);
             break;
         case "POST":
-            console.log(req.body)
+            //console.log(req.body)
+            console.log("POST is not implemented yet")
             res.end()
             break;
         default:

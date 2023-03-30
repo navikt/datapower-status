@@ -4,7 +4,7 @@ import { getDomainSyncStatus } from "../../../../libs/storage";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
     let domain = req.query.domain as string;
-    console.log("domain index " + domain)
+    //console.log("domain index " + domain)
     switch (method) {
         case "GET":
             const content = await getDomainSyncStatus(domain)

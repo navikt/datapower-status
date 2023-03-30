@@ -52,7 +52,7 @@ export async function getAllDomains() {
 }
 
 export async function getDomain(domain: string) {
-    console.log("getDomain " + domain);
+    //console.log("getDomain " + domain);
     const content = JSON.parse(await downloadFile(filenameDomains));
     const versions = content[domain]
     return versions;
