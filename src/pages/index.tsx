@@ -8,7 +8,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from 'react'
 import '@fontsource/roboto';
-import { dpInstance } from '../libs/statusSchema'
+import { dpInstance } from '../libs/interfaces'
 import axios from 'axios';
 
 const theme = createTheme();

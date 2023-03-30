@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { statusSchema } from "../../libs/statusSchema";
+import { statusSchema } from "../../libs/interfaces";
 import { getStatusFileContent, uploadStatusFile } from "../../libs/storage";
 import { withAuth } from '../../libs/auth';
 
@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     switch (method) {
         case "GET":
-            res.status(200).json(JSON.parse((await getStatusFileContent())));
+            res.status(200).json(await getStatusFileContent());
             break;
 
         case "POST":
@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(500).end("Internal error");
             } finally {
                 console.log("Uploaded file");
-                res.status(200).json(JSON.parse((await getStatusFileContent())));
+                res.status(200).json(await getStatusFileContent());
             }
 
             break;
