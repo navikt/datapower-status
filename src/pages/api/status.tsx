@@ -27,7 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const validate = statusSchemaZod.safeParse(body);
             if (!validate.success) {
                 const { errors } = validate.error;
-                res.status(400).json({ error: { message: "Invalid request", errors}});
+                res.status(400).end("Validating input failed");
+                //res.status(400).json({ error: { message: "Invalid request", errors}});
             }
             uploadStatusFile(JSON.stringify(body));
             console.log("Uploaded file");
