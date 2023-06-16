@@ -1,10 +1,30 @@
+import { z } from "zod";
+
+export const statusSchemaZod = z.array( z.object({
+        dpInstance: z.string(),
+        State: z.string(),
+        Version: z.string(),
+        MachineType: z.string(),
+        Domains: z.array( z.string() ),
+        uptime: z.string(),
+        bootuptime2: z.string()
+    }).required({
+        dpInstance: true,
+        State: true,
+        Version: true,
+        MachineType: true,
+        Domains: true,
+        uptime: true,
+        bootuptime2: true
+    }));
+
 
 export type statusSchema = {
     type: "array",
     items: {
         type: "object",
         properties: {
-            dpInstance: { type: "string" },
+            dpInstance: { type: "string", min: 15, max:20 },
             State: { type: "string" },
             Version: { type: "string" },
             MachineType: { type: "string" },
