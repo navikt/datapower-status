@@ -1,8 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { statusSchema } from "../../libs/interfaces";
+import { statusSchema, statusSchemaZod } from "../../libs/interfaces";
 import { getStatusFileContent, uploadStatusFile } from "../../libs/storage";
 import { withAuth } from '../../libs/auth';
+import { error } from "console";
 
+interface statusNextApiRequest extends NextApiRequest {
+    body:  statusSchema;
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<statusSchema>) {
     const { method } = req;
@@ -19,15 +23,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(401).end("Not authorized");
                 break;
             }
-
-            try {
-                uploadStatusFile(JSON.stringify(req.body, null));
-            } catch (error) {
-                res.status(500).end("Internal error");
-            } finally {
-                console.log("Uploaded file");
-                res.status(200).json(await getStatusFileContent());
+            const body = req.body;
+            const validate = statusSchemaZod.safeParse(body);
+            if (!validate.success) {
+                const { errors } = validate.error;
+                res.status(400).end("Validating input failed");
+                //res.status(400).json({ error: { message: "Invalid request", errors}});
             }
+            uploadStatusFile(JSON.stringify(body));
+            console.log("Uploaded file");
+            res.status(200).json(await getStatusFileContent());
 
             break;
         default:
