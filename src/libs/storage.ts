@@ -1,8 +1,10 @@
 
 import { getBucket } from './getStorageConfig'
+import { sanitize } from "sanitize-filename-ts";
 
-const filenameStatus = "statusInfo.json";
-const filenameDomains = "domainInfo.json";
+const filenameStatus = sanitize("statusInfo.json");
+const filenameDomains = sanitize("domainInfo.json");
+
 
 const bucket = getBucket();
 
