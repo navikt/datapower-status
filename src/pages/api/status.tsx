@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const body = req.body;
             const validate = statusSchemaZod.safeParse(body);
             if (!validate.success) {
-                const { errors } = validate.error;
+                //const { errors } = validate.error;
                 res.status(400).end("Validating input failed");
                 //res.status(400).json({ error: { message: "Invalid request", errors}});
             } else {
