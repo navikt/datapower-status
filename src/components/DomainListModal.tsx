@@ -3,15 +3,20 @@ import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
 import Typography from '@mui/material/Typography';
 import ListAlt from "@mui/icons-material/List";
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import { red, green } from '@mui/material/colors';
+
 import { useState } from 'react'
-import { ListItemText } from "@mui/material";
+import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 
 interface ModalProps {
   domains: string[],
   dpInstance: string
 }
+
 
 export default function DomainListModal({ domains, dpInstance }: ModalProps) {
   const [open, setOpen] = useState(false);
@@ -22,6 +27,15 @@ export default function DomainListModal({ domains, dpInstance }: ModalProps) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const statusIcon = (status: string) => {
+    switch (status) {
+      case "enabled":
+        return <DoneIcon sx={{ color: green[500] }}/>;
+      case "disabled":
+        return <CloseIcon sx={{ color: red[500] }}  />;
+    }
   };
 
   return (
@@ -58,9 +72,14 @@ export default function DomainListModal({ domains, dpInstance }: ModalProps) {
           <Box id="modal-modal-description" sx={{ mt: 0 }}>
             <List>
               {domains && (
-                domains.map((domain: string,) => (
-                  <ListItem disablePadding key={domain}>
-                    <ListItemText >{domain}</ListItemText>
+                domains.map((domain: any ) => (
+                  <ListItem disablePadding key={domain.domain}>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        { statusIcon(domain.mAdminState)}
+                      </ListItemIcon>
+                      <ListItemText >{domain.domain}</ListItemText>
+                    </ListItemButton>
                   </ListItem>
                 ))
               )}
