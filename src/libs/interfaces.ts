@@ -5,7 +5,10 @@ export const statusSchemaZod = z.array( z.object({
         State: z.string(),
         Version: z.string(),
         MachineType: z.string(),
-        Domains: z.array( z.string() ),
+        Domains: z.array( z.object({
+            domain: z.string(),
+            mAdminState: z.string()
+        }) ),
         uptime: z.string(),
         bootuptime2: z.string()
     }).required({
@@ -28,7 +31,13 @@ export type statusSchema = {
             State: { type: "string" },
             Version: { type: "string" },
             MachineType: { type: "string" },
-            Domains: { type: "array", items: { type: "string" } },
+            Domains: { type: "array", items: { 
+                type: "object",
+                properties: {
+                    domain: { type: "string"},
+                    mAdminState: { type: "string"}
+                }
+             } },
             uptime: { type: "string" },
             bootuptime2: { type: "string" },
         },
