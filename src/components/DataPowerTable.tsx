@@ -21,7 +21,7 @@ function DataPowerTableContent({ data }: Props) {
             <td className={styles.td}>{dp.bootuptime2}</td>
             <td className={styles.td}>{dp.MachineType}</td>
             <td className={styles.td}>
-              <DomainListModal domains={dp.Domains} dpInstance={dp.dpInstance} />
+              <DomainListModal domains={dp.Domains} dpInstanceName={dp.dpInstance} />
             </td>
           </tr>
         ))

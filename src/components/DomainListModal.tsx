@@ -9,34 +9,74 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { red, green } from '@mui/material/colors';
 
-import { useState } from 'react'
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { useEffect, useState } from 'react'
+import { ListItemButton, ListItemIcon, ListItemText, Tooltip } from "@mui/material";
+import SyncProblemIcon from '@mui/icons-material/SyncProblem';
+import SyncAltIcon from '@mui/icons-material/SyncAlt';
+import axios from 'axios';
+import { Domain } from '../libs/interfaces';
 
 interface ModalProps {
-  domains: string[],
-  dpInstance: string
+  domains: Domain[],
+  dpInstanceName: string
 }
 
+interface DomainStatus extends Domain {
+  sync: string;
+}
 
-export default function DomainListModal({ domains, dpInstance }: ModalProps) {
-  const [open, setOpen] = useState(false);
+export default function DomainListModal({ domains, dpInstanceName }: ModalProps) {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [domainStatuses, setDomainStatuses] = useState<DomainStatus[]>([]);
 
   const handleOpen = () => {
-    setOpen(true);
+    setModalOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setModalOpen(false);
   };
 
   const statusIcon = (status: string) => {
     switch (status) {
       case "enabled":
-        return <DoneIcon sx={{ color: green[500] }}/>;
+        return <Tooltip title="enabled"><DoneIcon sx={{ color: green[500] }}/></Tooltip>;
       case "disabled":
-        return <CloseIcon sx={{ color: red[500] }}  />;
+        return <Tooltip title="disabled"><CloseIcon sx={{ color: red[500] }}/></Tooltip>;
     }
   };
+
+  const syncIcon = (sync: string) => {
+    if (sync.includes('is in sync')) {
+      return <Tooltip title="is in sync"><SyncAltIcon sx={{ color: 'green' }}/></Tooltip>
+    } else  {
+      return <Tooltip title="not in sync"><SyncProblemIcon sx={{ color: 'red' }} /></Tooltip>
+    }
+  }
+  const getDomainSyncStatus = async (domain: string): Promise<string> => {
+    try {
+      const resp = await axios.get<string>('api/domain/' + domain + '/sync');
+      const responseData: string = resp.data;
+      return responseData;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    const fetchDataForDomains = async () => {
+      const domainStatusPromises = domains.map(async (domain) => {
+        const sync = await getDomainSyncStatus(domain.domain);
+        return { ...domain, sync };
+      });
+
+      const domainStatuses = await Promise.all(domainStatusPromises);
+      setDomainStatuses(domainStatuses);
+    };
+
+    fetchDataForDomains();
+  }, []);
 
   return (
     <div>
@@ -49,7 +89,7 @@ export default function DomainListModal({ domains, dpInstance }: ModalProps) {
         Domains
       </Button>
       <Modal
-        open={open}
+        open={isModalOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
@@ -67,18 +107,21 @@ export default function DomainListModal({ domains, dpInstance }: ModalProps) {
           p: [2, 4, 3],
         }}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Domains on {dpInstance}:
+            Domains on {dpInstanceName}:
           </Typography>
           <Box id="modal-modal-description" sx={{ mt: 0 }}>
             <List>
-              {domains && (
-                domains.map((domain: any ) => (
-                  <ListItem disablePadding key={domain.domain}>
+              {domainStatuses && (
+                domainStatuses.map((domainStatus ) => (
+                  <ListItem disablePadding key={domainStatus.domain}>
                     <ListItemButton>
                       <ListItemIcon>
-                        { statusIcon(domain.mAdminState)}
+                        { statusIcon(domainStatus.mAdminState)}
                       </ListItemIcon>
-                      <ListItemText >{domain.domain}</ListItemText>
+                      <ListItemIcon>
+                        { syncIcon(domainStatus.sync) }
+                      </ListItemIcon>
+                      <ListItemText >{domainStatus.domain}</ListItemText>
                     </ListItemButton>
                   </ListItem>
                 ))

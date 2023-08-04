@@ -4,8 +4,8 @@ import { deleteHostFromDomain, getDomainWithHost, saveDomainVersion } from "../.
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
-    let domain = "$" + req.query.domain as string;
-    let host = "$" + req.query.host as string;
+    let domain = req.query.domain as string;
+    let host = req.query.host as string;
 
     switch (method) {
         case "GET":

@@ -8,22 +8,22 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from 'react'
 import '@fontsource/roboto';
-import { dpInstance } from '../libs/interfaces'
+import { dpInstance, statusSchemaZod } from '../libs/interfaces'
 import axios from 'axios';
 
 const theme = createTheme();
 
 export default function Index() {
   const [data, setData] = useState<dpInstance[]>([] as dpInstance[]);
-  const [isLoading, setLoading] = useState(false);
+  //const [isLoading, setLoading] = useState(false);
 
   const makeRequest = () => {
-    setLoading(true)
+    //setLoading(true)
     console.log("Fetching new status")
-    axios.get<dpInstance[]>('/api/status')
+    axios.get('/api/status')
       .then(({ data }) => {
         setData(data);
-        setLoading(false);
+      //  setLoading(false);
       })
   }
 
