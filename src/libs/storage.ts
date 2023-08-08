@@ -75,16 +75,17 @@ export async function getAllDomains() {
 export async function getDomain(domain: string) {
     //console.log("getDomain " + domain);
     const content = await getDownloadFileAsJSON(filenameDomains);
-    if (content) {
-        const versions = content[domain]
+    if (content && domain in content) {
+        const versions = content[domain].versions
         return versions;
+    } else {
+        return undefined;
     }
 }
 
 export async function getDomainWithHost(domain: string, host:string) {
     console.log("getDomainWithHost " + domain + " " + host);
     const content = await getDownloadFileAsJSON(filenameDomains);
-    console.log(content)
     if ( content && domain in content && (host in content[domain].versions)){
         return content[domain].versions[host];
     } 

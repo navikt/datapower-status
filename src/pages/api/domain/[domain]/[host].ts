@@ -9,9 +9,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     switch (method) {
         case "GET":
-            const content = await getDomainWithHost(domain, host)
+            const content: JSON = await getDomainWithHost(domain, host)
+
             if (content) {
-                //console.log(content)
                 res.status(200).json(content);
             } else {
                 console.log("Domain or host not exist")
