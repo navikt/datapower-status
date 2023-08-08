@@ -19,12 +19,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             break;
         case "POST":
-            let version  = "$" + req.body as string;
             //console.log("POSTing version to " + version + " " + host + " " + domain)
             if (!withAuth(req, res)) {
                 res.status(401).end("Not authorized");
                 break;
             }
+            const version  = req.body as string;
             saveDomainVersion(domain, host, version);
             res.status(201).send(version);
             break;
