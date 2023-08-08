@@ -61,15 +61,20 @@ export interface dpInstance {
     uptime: string,
     bootuptime2: string,
     MachineType: string,
-    Domains: string[]
+    Domains: Domain[]
 }
 
-export interface DomainSchema {
+export interface Domain {
+    domain: string,
+    mAdminState: string
+}
+
+/* export interface DomainSchema {
     domain: string,
     versions: { 
         [key: string]: DomainVersionSchema
     }
-}
+} */
 
 export interface DomainVersionSchema {
     host: string,

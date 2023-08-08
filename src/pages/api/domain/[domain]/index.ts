@@ -10,7 +10,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const content = await getDomain(domain)
             console.log("got domain info")
             if (content) {
-                // console.log(content)
                 res.status(200).json(content);
             } else {
                 console.log("Domain not exist")

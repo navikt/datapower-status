@@ -14,22 +14,26 @@ import axios from 'axios';
 const theme = createTheme();
 
 export default function Index() {
-  const [data, setData] = useState<dpInstance[]>([] as dpInstance[]);
-  const [isLoading, setLoading] = useState(false);
+  console.log("Index component rendered");
 
-  const makeRequest = () => {
-    setLoading(true)
+  const [data, setData] = useState<dpInstance[]>([]);
+  const [isDataFetched, setIsDataFetched] = useState(false);
+
+  const makeRequest = async () => {
     console.log("Fetching new status")
-    axios.get<dpInstance[]>('/api/status')
+    await axios.get('/api/status')
       .then(({ data }) => {
         setData(data);
-        setLoading(false);
+        setIsDataFetched(true);
       })
   }
 
   useEffect(() => {
-    makeRequest();
-  }, []);
+    if ( !isDataFetched) {
+      console.log("data is not fetched")
+      makeRequest();
+    }
+  }, [isDataFetched]);
 
   return (
     <div className={styles.container}>

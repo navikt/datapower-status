@@ -1,19 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getDomainSyncStatus } from "../../../../libs/storage";
 
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
     let domain = req.query.domain as string;
     //console.log("domain index " + domain)
     switch (method) {
         case "GET":
-            const content = await getDomainSyncStatus(domain)
-            if (content) {
-                // console.log(content)
-                res.status(200).json(content);
-            } else {
-                console.log("Domain not exist")
-                res.status(404).send("domain not found")
+            const content = await getDomainSyncStatus(domain);
+            if (content == undefined) {
+                res.status(200).end(domain + " cannot find status");
+            } else if (content == false) {
+                res.status(200).end(domain + " is not in sync");
+            }else {
+                res.status(200).end(domain + " is in sync");
             }
             break;
         default:

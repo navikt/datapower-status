@@ -9,9 +9,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     switch (method) {
         case "GET":
-            const content = await getDomainWithHost(domain, host)
+            const content: JSON = await getDomainWithHost(domain, host)
+
             if (content) {
-                //console.log(content)
                 res.status(200).json(content);
             } else {
                 console.log("Domain or host not exist")
@@ -19,14 +19,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             break;
         case "POST":
-            let version  = req.body as string;
+            let version  = "$" + req.body as string;
             //console.log("POSTing version to " + version + " " + host + " " + domain)
             if (!withAuth(req, res)) {
                 res.status(401).end("Not authorized");
                 break;
             }
             saveDomainVersion(domain, host, version);
-            res.status(200).send(version);
+            res.status(201).send(version);
             break;
         case "DELETE":
             if (!withAuth(req, res)) {
