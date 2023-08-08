@@ -8,28 +8,32 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from 'react'
 import '@fontsource/roboto';
-import { dpInstance, statusSchemaZod } from '../libs/interfaces'
+import { dpInstance } from '../libs/interfaces'
 import axios from 'axios';
 
 const theme = createTheme();
 
 export default function Index() {
-  const [data, setData] = useState<dpInstance[]>([] as dpInstance[]);
-  //const [isLoading, setLoading] = useState(false);
+  console.log("Index component rendered");
 
-  const makeRequest = () => {
-    //setLoading(true)
+  const [data, setData] = useState<dpInstance[]>([]);
+  const [isDataFetched, setIsDataFetched] = useState(false);
+
+  const makeRequest = async () => {
     console.log("Fetching new status")
-    axios.get('/api/status')
+    await axios.get('/api/status')
       .then(({ data }) => {
         setData(data);
-      //  setLoading(false);
+        setIsDataFetched(true);
       })
   }
 
   useEffect(() => {
-    makeRequest();
-  }, []);
+    if ( !isDataFetched) {
+      console.log("data is not fetched")
+      makeRequest();
+    }
+  }, [isDataFetched]);
 
   return (
     <div className={styles.container}>

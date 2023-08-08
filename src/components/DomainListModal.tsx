@@ -30,6 +30,7 @@ export default function DomainListModal({ domains, dpInstanceName }: ModalProps)
   const [domainStatuses, setDomainStatuses] = useState<DomainStatus[]>([]);
 
   const handleOpen = () => {
+    fetchDataForDomains()
     setModalOpen(true);
   };
 
@@ -53,6 +54,7 @@ export default function DomainListModal({ domains, dpInstanceName }: ModalProps)
       return <Tooltip title="not in sync"><SyncProblemIcon sx={{ color: 'red' }} /></Tooltip>
     }
   }
+
   const getDomainSyncStatus = async (domain: string): Promise<string> => {
     try {
       const resp = await axios.get<string>('api/domain/' + domain + '/sync');
@@ -64,19 +66,15 @@ export default function DomainListModal({ domains, dpInstanceName }: ModalProps)
     }
   };
 
-  useEffect(() => {
-    const fetchDataForDomains = async () => {
-      const domainStatusPromises = domains.map(async (domain) => {
-        const sync = await getDomainSyncStatus(domain.domain);
-        return { ...domain, sync };
-      });
+  const fetchDataForDomains = async () => {
+    const domainStatusPromises = domains.map(async (domain) => {
+      const sync = await getDomainSyncStatus(domain.domain);
+      return { ...domain, sync };
+    });
 
-      const domainStatuses = await Promise.all(domainStatusPromises);
-      setDomainStatuses(domainStatuses);
-    };
-
-    fetchDataForDomains();
-  }, []);
+    const domainStatuses = await Promise.all(domainStatusPromises);
+    setDomainStatuses(domainStatuses);
+  };
 
   return (
     <div>

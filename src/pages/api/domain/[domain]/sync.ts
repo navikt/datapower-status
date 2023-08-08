@@ -8,36 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     //console.log("domain index " + domain)
     switch (method) {
         case "GET":
-            const content = await getDomainSyncStatus(domain)
+            const content = await getDomainSyncStatus(domain);
             if (content) {
-
-                let oldversion = null;
-                let okStatus = false;
-                //console.log(content)
-                for ( let host in content) {
-                  //  console.log(host)
-                    if ( !oldversion ) {
-                        console.log("oldversion is null");
-                        oldversion = content[host];
-                        continue;
-                    }
-                    if (oldversion != content[host]) {
-                        console.log("oldversion is not equal");
-                        console.log(oldversion + " " + content[host]);
-                        okStatus = false;
-                    }else {
-                        okStatus = true;
-                    }
-                }
-                if (okStatus) {
-                    res.status(200).send(domain + " is in sync");
-                } else {
-                    res.status(200).send(domain + " is not in sync");
-                }
-
+                res.status(200).end(domain + " is in sync");
             } else {
-                //console.log("domain not found");
-                res.status(200).send("domain not found");
+                res.status(200).end(domain + " is not in sync");
             }
             break;
         default:

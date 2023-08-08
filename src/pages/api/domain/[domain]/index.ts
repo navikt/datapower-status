@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     //console.log("domain index " + domain)
     switch (method) {
         case "GET":
-            const content = await getDomain(domain)
+            const content = getDomain(domain)
             console.log("got domain info")
             if (content) {
                 // console.log(content)

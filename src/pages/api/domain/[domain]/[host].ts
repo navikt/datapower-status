@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 break;
             }
             saveDomainVersion(domain, host, version);
-            res.status(200).send(version);
+            res.status(201).send(version);
             break;
         case "DELETE":
             if (!withAuth(req, res)) {
