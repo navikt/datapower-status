@@ -50,6 +50,8 @@ export default function DomainListModal({ domains, dpInstanceName }: ModalProps)
   const syncIcon = (sync: string) => {
     if (sync.includes('is in sync')) {
       return <Tooltip title="is in sync"><SyncAltIcon sx={{ color: 'green' }}/></Tooltip>
+    } else if (sync.includes("cannot find status")) {
+      return <Tooltip title="undefined"><SyncProblemIcon sx={{ color: 'orange' }} /></Tooltip>
     } else  {
       return <Tooltip title="not in sync"><SyncProblemIcon sx={{ color: 'red' }} /></Tooltip>
     }

@@ -9,10 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (method) {
         case "GET":
             const content = await getDomainSyncStatus(domain);
-            if (content) {
-                res.status(200).end(domain + " is in sync");
-            } else {
+            if (content == undefined) {
+                res.status(200).end(domain + " cannot find status");
+            } else if (content == false) {
                 res.status(200).end(domain + " is not in sync");
+            }else {
+                res.status(200).end(domain + " is in sync");
             }
             break;
         default:

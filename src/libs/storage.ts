@@ -15,14 +15,22 @@ async function fileExists(fileName: string) {
 
 async function downloadFile(filename: string) {
     // console.log("downloading file " + filename);
-    const exists = await fileExists(filename);
-    if (exists) {
-        const content = await (await bucket).file(filename).download();
-        if (content) {
-            return content;
+    try {
+        const exists = await fileExists(filename);
+        console.log("file exists " + exists);
+        if (exists) {
+            console.log("Found file " + filename);
+            const content = await (await bucket).file(filename).download();
+            if (content) {
+                console.log("found content")
+                return content;
+            }
+        } else {
+            console.log("File not found")
+            return undefined;
         }
-    } else {
-        console.log("File not found")
+    } catch (error) {
+        console.error("Error downloading file:", error);
         return undefined;
     }
 }
