@@ -4,8 +4,8 @@ import { deleteHostFromDomain, getDomainWithHost, saveDomainVersion } from "../.
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
-    let domain = "$" + req.query.domain as string;
-    let host = "$" + req.query.host as string;
+    const domain = req.query.domain as string;
+    const host = req.query.host as string;
 
     switch (method) {
         case "GET":
@@ -24,8 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(401).end("Not authorized");
                 break;
             }
-            const version: string  = req.body as string;
-            saveDomainVersion(domain, host, version);
+            const version = req.body as string;
+            await saveDomainVersion(domain, host, version);
             res.status(201).send(version);
             break;
         case "DELETE":
