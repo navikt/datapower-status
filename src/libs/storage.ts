@@ -84,7 +84,6 @@ export async function getDomain(domain: string) {
 }
 
 export async function getDomainWithHost(domain: string, host:string) {
-    console.log("getDomainWithHost " + domain + " " + host);
     const content = await getDownloadFileAsJSON(filenameDomains);
     if ( content && domain in content && (host in content[domain].versions)){
         return content[domain].versions[host];
@@ -97,7 +96,7 @@ export async function saveDomainVersion(domain: string, host: string, version: s
     let content: any = {};
     try {
         console.log("Try to get existing domainlist")
-        content = getDownloadFileAsJSON(filenameDomains);
+        content = await getDownloadFileAsJSON(filenameDomains);
         //console.log(content[domain])
         // console.log(content)
         if (domain in content) {
@@ -128,7 +127,6 @@ export async function deleteHostFromDomain(domain: string, host:string) {
 
 export async function getDomainSyncStatus(domain: string) {
     const content = await getDownloadFileAsJSON(filenameDomains);
-    console.log("getDomainSyncStatus " + domain)
 
     if ( content && domain in content && content[domain].versions){
         let okStatus = false;

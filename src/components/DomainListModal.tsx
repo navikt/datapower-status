@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { red, green } from '@mui/material/colors';
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ListItemButton, ListItemIcon, ListItemText, Tooltip } from "@mui/material";
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
