@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getDomainSyncStatus } from "../../../../libs/storage";
-
+import xss from "xss";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
-    let domain = req.query.domain as string;
+    let domain = xss(req.query.domain as string);
     //console.log("domain index " + domain)
     switch (method) {
         case "GET":

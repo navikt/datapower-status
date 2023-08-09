@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withAuth } from "../../../../libs/auth";
 import { deleteHostFromDomain, getDomainWithHost, saveDomainVersion } from "../../../../libs/storage";
+import xss from "xss";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
-    let domain = "$" + req.query.domain as string;
-    let host = "$" + req.query.host as string;
+    const domain = xss(req.query.domain as string);
+    const host = xss(req.query.host as string);
 
     switch (method) {
         case "GET":
@@ -24,8 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(401).end("Not authorized");
                 break;
             }
-            const version: string  = req.body as string;
-            saveDomainVersion(domain, host, version);
+            const version = req.body as string;
+            await saveDomainVersion(domain, host, version);
             res.status(201).send(version);
             break;
         case "DELETE":
@@ -33,9 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(401).end("Not authorized");
                 break;
             }
-            deleteHostFromDomain(domain, host);
+            await deleteHostFromDomain(domain, host);
             //console.log("DELETEing %s from %s", host, domain);
-            res.end();
+            res.status(204).end();
             break;
         default:
             res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
