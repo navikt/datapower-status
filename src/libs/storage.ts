@@ -67,9 +67,13 @@ export async function getStatusFileContent() {
 export async function getAllDomains() {
     console.log("getDomains " + filenameDomains);
     const content = await getDownloadFileAsJSON(filenameDomains);
-    const keys= Object.keys(content)
-    console.log(keys)
-    return keys;
+    if ( content) {
+        const keys= Object.keys(content)
+        console.log(keys)
+        return keys;
+    } else {
+        return undefined;
+    }
 }
 
 export async function getDomain(domain: string) {
@@ -109,15 +113,14 @@ export async function saveDomainVersion(domain: string, host: string, version: s
     try {
         console.log("Try to get existing domainlist")
         content = await getDownloadFileAsJSON(filenameDomains);
-        //console.log(content[domain])
-        // console.log(content)
-        if (domain in content) {
+        if (content && domain in content) {
         //content[domain].versions[host] = version;
             content[domain].versions[host] = version;
-        }else {
+        }
+        /* else {
             content[domain] =  {versions: {}};
             content[domain].versions[host] = version;
-        }
+        } */
     } catch (error) {
         console.log("Error saving domainversion")
         console.log(error)
@@ -125,7 +128,7 @@ export async function saveDomainVersion(domain: string, host: string, version: s
         content[domain].versions[host] = version;
     }
     console.log(content)
-    saveFile(filenameDomains, JSON.stringify(content));
+    await saveFile(filenameDomains, JSON.stringify(content));
 }
 
 export async function deleteHostFromDomain(domain: string, host:string) {
@@ -133,8 +136,7 @@ export async function deleteHostFromDomain(domain: string, host:string) {
     if ( domain in content && (host in content[domain].versions)){
         delete content[domain].versions[host];
     }
-    //console.log(content)
-    saveFile(filenameDomains, JSON.stringify(content));
+    await saveFile(filenameDomains, JSON.stringify(content));
 }
 
 export async function getDomainSyncStatus(domain: string) {

@@ -8,8 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (method) {
         case "GET":
             const domain = await getAllDomains()
-            // console.log(domain)
-            res.status(200).json(domain);
+            if (domain != undefined) {
+                res.status(200).json(domain);
+            } else { res.status(500).end()}
             break;
         case "POST":
             //console.log(req.body)
@@ -17,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.end()
             break;
         default:
-            res.setHeader('Allow', ['GET']);
+            res.setHeader('Allow', ['GET', 'POST']);
             res.status(405).end(`Method ${method} Not Allowed`);
             break;
     }
