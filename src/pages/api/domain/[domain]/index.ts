@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { deleteDomain, getDomain } from "../../../../libs/storage";
-import { ResetTv } from "@mui/icons-material";
 import { withAuth } from "../../../../libs/auth";
 import xss from "xss";
 
