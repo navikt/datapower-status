@@ -83,6 +83,18 @@ export async function getDomain(domain: string) {
     }
 }
 
+export async function deleteDomain(domain:string) {
+    const content = await getDownloadFileAsJSON(filenameDomains);
+    if (content && domain in content) {
+        console.log("Deleting domain " + domain);
+        delete content[domain]
+        saveFile(filenameDomains, JSON.stringify(content));
+        return true;
+    } else {
+        return false;
+    }
+}
+
 export async function getDomainWithHost(domain: string, host:string) {
     const content = await getDownloadFileAsJSON(filenameDomains);
     if ( content && domain in content && (host in content[domain].versions)){
