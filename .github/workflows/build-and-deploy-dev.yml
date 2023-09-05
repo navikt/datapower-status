@@ -13,7 +13,7 @@ jobs:
     name: "build app and push"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v3"
+      - uses: "actions/checkout@v4"
       - uses: "actions/setup-node@v3.7.0"
         with:
           node-version: 18
@@ -37,7 +37,7 @@ jobs:
     needs: "build"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v3"
+      - uses: "actions/checkout@v4"
       - name: "Deploy to DEV"
         uses: "nais/deploy/actions/deploy@master"
         env:
@@ -52,7 +52,7 @@ jobs:
 #    needs: "build"
 #    runs-on: "ubuntu-18.04"
 #    steps:
-#      - uses: "actions/checkout@v3"
+#      - uses: "actions/checkout@v4"
 #      - name: "Deploy alerts to DEV"
 #        uses: "nais/deploy/actions/deploy@v1"
 #        env:
@@ -65,7 +65,7 @@ jobs:
 #    needs: "build"
 #    runs-on: "ubuntu-18.04"
 #    steps:
-#      - uses: "actions/checkout@v3"
+#      - uses: "actions/checkout@v4"
 #      - name: "Deploy alerts to PROD"
 #        uses: "nais/deploy/actions/deploy@v1"
 #        env:
