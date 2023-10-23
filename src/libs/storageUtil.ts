@@ -4,7 +4,7 @@ import { getBucket } from './getStorageConfig';
 export async function fileExists(fileName: string) {
     const bucket = await getBucket();
     const exist = (await (await bucket).file(fileName).exists());
-    console.log("Exist " + exist)
+    //console.log("Exist " + exist)
     return exist
 }
 
@@ -14,12 +14,12 @@ export async function downloadFile(filename: string) {
     try {
        // console.log((await bucket).getFiles());
         const exists = await fileExists(filename);
-        console.log("file exists " + exists);
+        //console.log("file exists " + exists);
         if (exists) {
             console.log("Found file " + filename);
             const content = await (await bucket).file(filename).download();
             if (content) {
-                console.log("found content")
+                //console.log("found content")
                 //console.log(content)
                 return content;
             }

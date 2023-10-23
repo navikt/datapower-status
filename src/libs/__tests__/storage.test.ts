@@ -28,7 +28,7 @@ describe("Test storage",() => {
                 const fileArray = [mockFile];
                 return fileArray;
             })
-        } as unknown as jest.Mocked<Bucket>
+        } as unknown as jest.Mocked<Bucket>;
         
         mockStorage = {
             bucket: jest.fn(() => mockBucket),

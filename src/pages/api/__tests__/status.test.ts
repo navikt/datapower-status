@@ -2,11 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import handler from '../status';
 import * as gcsconfig from '../../../libs/getStorageConfig';
 import { Bucket, File } from '@google-cloud/storage';
+import { createAuth } from '../../../libs/testUtils/testHelper';
 
 jest.mock('@google-cloud/storage');
 
 describe('API Status Route', () => {
-    const inputData:string  = '[{"dpInstance": "hostname.example.com","State": "active","Version": "IDG.10.0.1.4","MachineType": "5725","Domains": [{"domain": "default", "mAdminState": "enabled"}],"uptime": "29 days 00:54:21","bootuptime2": "29 days 00:54:40"}]'
+    const inputData:string  = '[{"dpInstance": "hostname.example.com","State": "active","Version": "IDG.10.0.1.4","MachineType": "5725","Domains": [{"domain": "default", "mAdminState": "enabled"}],"uptime": "29 days 00:54:21","bootuptime2": "29 days 00:54:40"}]';
 
     beforeEach(() => {
         const mockBucket = {
@@ -59,7 +60,7 @@ describe('API Status Route', () => {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "authorization": "Basic dGVzdFVzZXI6dGVzdA=="
+                "authorization": createAuth("wrong")
             },
         } as NextApiRequest;
         const res = {status: jest.fn().mockReturnThis() , json: jest.fn()} as unknown as NextApiResponse;
@@ -91,7 +92,7 @@ describe('API Status Route', () => {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "authorization": "Basic ZHB1c2VyOnRlc3Q="
+                "authorization": createAuth()
             },
             body: JSON.parse(inputData)
         } as NextApiRequest;
@@ -122,7 +123,7 @@ describe('API Status Route', () => {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "authorization": "Basic ZHB1c2VyOnRlc3Q="
+                "authorization": createAuth()
             },
             body: JSON.parse(inputData)
         } as NextApiRequest;

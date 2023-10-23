@@ -9,6 +9,7 @@ export function withAuth(req: NextApiRequest) {
     const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
 
+    console.log("withAuth", process.env.dpSecret)
     if (!(username === "dpuser" && password === process.env.dpSecret)) {
         return false;
     }

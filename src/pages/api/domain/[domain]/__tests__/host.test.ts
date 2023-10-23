@@ -2,11 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import handler from '../[host]';
 import * as gcsconfig from '../../../../../libs/getStorageConfig';
 import { Storage, Bucket, File } from '@google-cloud/storage';
+import { createAuth } from '../../../../../libs/testUtils/testHelper';
 
 jest.mock('@google-cloud/storage');
 
 describe('API domain/[domain]/[host] Route', () => {
-  const inputData = '{"testDomain":{"versions":{"dp-01":"2.0.1","dp-02":"2.0.1"}},"testDomain2":{"versions":{"dp-01":"6.6.6"}}}'
+  const inputData: string = '{"testDomain":{"versions":{"dp-01":"2.0.1","dp-02":"2.0.1"}},"testDomain2":{"versions":{"dp-01":"6.6.6"}}}';
   const mockBucketName: string = "mockBucket";
   let mockBucket: jest.Mocked<Bucket>;
   let mockFile: jest.Mocked<File>;
@@ -80,7 +81,7 @@ describe('API domain/[domain]/[host] Route', () => {
           host: 'dp-02'
         },
         headers: {
-            "authorization": "Basic ZHB1c2VyOnRlc3Q="
+            "authorization": createAuth()
         },
         body: "4.0.4"
     } as unknown as NextApiRequest;
@@ -126,7 +127,7 @@ describe('API domain/[domain]/[host] Route', () => {
           host: 'dp-02'
         },
         headers: {
-            "authorization": "Basic ZHB1c2VyOnRlc3Q="
+            "authorization": createAuth()
         }
     } as unknown as NextApiRequest;
 

@@ -31,7 +31,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: ".nais/nais.yaml"
-          VARS: nais/dev.yaml
+          VARS: .nais/dev.yaml
           VAR: image=${{ steps.docker-push.outputs.image }}
 
       - name: Deploy prod-gcp
@@ -40,7 +40,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: ".nais/nais.yaml"
-          VARS: nais/prod.yaml
+          VARS: .nais/prod.yaml
           VAR: image=${{ steps.docker-push.outputs.image }}
 
 #  "deployAlertsToDev":

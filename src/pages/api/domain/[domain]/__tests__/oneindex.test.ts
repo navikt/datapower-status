@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import handler from '../index';
 import * as gcsconfig from '../../../../../libs/getStorageConfig';
 import { Bucket, File } from '@google-cloud/storage';
+import { createAuth } from '../../../../../libs/testUtils/testHelper';
 
 jest.mock('@google-cloud/storage');
 
@@ -79,48 +80,48 @@ describe('API domain/[domain] Route', () => {
     expect(res.json).toHaveBeenCalledWith({ error: 'Not authorized' });
   });
 
-it("DELETE domain and return status code 204", async () =>{
-    const req = {
-      method: 'DELETE',
-      headers: {
-        "authorization": "Basic ZHB1c2VyOnRlc3Q="
-      },
-      query: {
-        domain: 'testDomain'
-      },
-    } as unknown as NextApiRequest;
+  it("DELETE domain and return status code 204", async () =>{
+      const req = {
+        method: 'DELETE',
+        headers: {
+          "authorization": createAuth()
+        },
+        query: {
+          domain: 'testDomain'
+        },
+      } as unknown as NextApiRequest;
 
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn()
-    } as unknown as NextApiResponse;
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      } as unknown as NextApiResponse;
 
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(204);
-    expect(res.json).toHaveBeenCalledWith(JSON.parse('{"success": "testDomain deleted"}'));
-    expect(mockFile.save).toHaveBeenCalled();
-  });
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(204);
+      expect(res.json).toHaveBeenCalledWith(JSON.parse('{"success": "testDomain deleted"}'));
+      expect(mockFile.save).toHaveBeenCalled();
+    });
 
-it("DELETE domain failed and return status code 400", async () =>{
-    const req = {
-      method: 'DELETE',
-      headers: {
-        "authorization": "Basic ZHB1c2VyOnRlc3Q="
-      },
-      query: {
-        domain: 'failedDomain'
-      },
-    } as unknown as NextApiRequest;
+  it("DELETE domain failed and return status code 400", async () =>{
+      const req = {
+        method: 'DELETE',
+        headers: {
+          "authorization": createAuth()
+        },
+        query: {
+          domain: 'failedDomain'
+        },
+      } as unknown as NextApiRequest;
 
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn()
-    } as unknown as NextApiResponse;
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      } as unknown as NextApiResponse;
 
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith(JSON.parse('{"error": "failedDomain failed to delete"}'));
-  });
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith(JSON.parse('{"error": "failedDomain failed to delete"}'));
+    });
 
 
 });
