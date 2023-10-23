@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest } from "next";
 
-export function withAuth(req: NextApiRequest, res: NextApiResponse) {
+export function withAuth(req: NextApiRequest) {
     //console.log("Auth required");
-    if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
+    if (!req.headers || !req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
         return false;
     }
     const base64Credentials = req.headers.authorization.split(' ')[1];

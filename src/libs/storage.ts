@@ -1,62 +1,26 @@
 
-import { getBucket } from './getStorageConfig'
 import { sanitize } from "sanitize-filename-ts";
-
+import { saveFile, downloadFile } from "./storageUtil";
 const filenameStatus = sanitize("statusInfo.json");
 const filenameDomains = sanitize("domainInfo.json");
 
 
-const bucket = getBucket();
-
-async function fileExists(fileName: string) {
-    const exist = (await (await bucket).file(fileName).exists());
-    return exist
-}
-
-async function downloadFile(filename: string) {
-    // console.log("downloading file " + filename);
-    try {
-        const exists = await fileExists(filename);
-        console.log("file exists " + exists);
-        if (exists) {
-            console.log("Found file " + filename);
-            const content = await (await bucket).file(filename).download();
-            if (content) {
-                console.log("found content")
-                return content;
-            }
-        } else {
-            console.log("File not found")
-            return undefined;
-        }
-    } catch (error) {
-        console.error("Error downloading file:", error);
-        return undefined;
-    }
-}
-
 async function getDownloadFileAsJSON(filename:string) {
     const fileContent = await downloadFile(filename);
-    if ( fileContent !== undefined){
+    if ( fileContent){
+        console.log(fileContent.toString())
         const json = JSON.parse(fileContent.toString());
         return json;
     } else {
-         return undefined;
+         return null;
     }
-}
-
-async function saveFile(filename: string, content: string) {
-    // console.log("savefile " + filename);
-    // console.log(content);
-    (await bucket)
-        .file(filename)
-        .save(content);
 }
 
 export async function uploadStatusFile(content: string) {
     console.log("Upload file");
-    saveFile(filenameStatus, content);
+    await saveFile(filenameStatus, content);
     console.log(`${filenameStatus} uploaded with contents`)
+    console.log(content)
 }
 
 export async function getStatusFileContent() {
@@ -67,12 +31,13 @@ export async function getStatusFileContent() {
 export async function getAllDomains() {
     console.log("getDomains " + filenameDomains);
     const content = await getDownloadFileAsJSON(filenameDomains);
+    console.log(content)
     if ( content) {
         const keys= Object.keys(content)
         console.log(keys)
         return keys;
-    } else {
-        return undefined;
+    }  else {
+        return null;
     }
 }
 
@@ -102,37 +67,40 @@ export async function deleteDomain(domain:string) {
 export async function getDomainWithHost(domain: string, host:string) {
     const content = await getDownloadFileAsJSON(filenameDomains);
     if ( content && domain in content && (host in content[domain].versions)){
+        console.log(content[domain].versions[host])
         return content[domain].versions[host];
-    } 
-    console.log("domain not found")  
+    } else {
+        console.log("domain not found");
+        return;
+    }
 }
 
 export async function saveDomainVersion(domain: string, host: string, version: string) {
-    //console.log("saveDomainVersion " + domain)
-    let content: any = {};
+    console.log("saveDomainVersion " + domain)
     try {
-        console.log("Try to get existing domainlist")
-        content = await getDownloadFileAsJSON(filenameDomains);
-        if (content && domain in content) {
-        //content[domain].versions[host] = version;
-            content[domain].versions[host] = version;
+        let content = await getDownloadFileAsJSON(filenameDomains);
+
+        if (!content) {
+            content = {};
         }
-        /* else {
-            content[domain] =  {versions: {}};
-            content[domain].versions[host] = version;
-        } */
+
+        if (!content[domain]) {
+            content[domain] = { versions: {} };
+        }
+
+        const { versions } = content[domain];
+        versions[host] = version;
+
+        console.log(content);
+
+        await saveFile(filenameDomains, JSON.stringify(content));
     } catch (error) {
-        console.log("Error saving domainversion")
-        console.log(error)
-        content[domain] =  {versions: {}};
-        content[domain].versions[host] = version;
+        console.error("Error saving domain version:", error);
     }
-    console.log(content)
-    await saveFile(filenameDomains, JSON.stringify(content));
 }
 
 export async function deleteHostFromDomain(domain: string, host:string) {
-    let content = await getDownloadFileAsJSON(filenameDomains);
+    const content = await getDownloadFileAsJSON(filenameDomains);
     if ( domain in content && (host in content[domain].versions)){
         delete content[domain].versions[host];
     }
@@ -150,7 +118,7 @@ export async function getDomainSyncStatus(domain: string) {
         } else {
             let oldversion = null;
             const domainhosts = content[domain].versions
-            for ( let host in domainhosts) {
+            for ( const host in domainhosts) {
                 //console.log(host + " " + domainhosts[host])
                 if ( !oldversion ) {
                     //console.log("oldversion is null");

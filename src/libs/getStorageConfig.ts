@@ -1,9 +1,11 @@
 import { Bucket, Storage } from '@google-cloud/storage'
 const inDevelopment = process.env.NODE_ENV === 'development'
 
-function getBucketName() {
+/* istanbul ignore next */
+export function getBucketName(): string {
     const bucketName = process.env.BUCKET_NAME;
     if (bucketName) {
+        console.log('getBucketName called ' +  bucketName)
         return bucketName as string
 
     }
@@ -11,7 +13,8 @@ function getBucketName() {
     process.exit(-1)
 }
 
-function getStorage() {
+/* istanbul ignore next */
+export function getStorage(): Storage {
     console.log(`inDevelopment: ${inDevelopment}`)
     if (inDevelopment) {
         return new Storage({
@@ -19,10 +22,12 @@ function getStorage() {
             projectId: process.env.GCP_TEAM_PROJECT_ID
         });
     } else {
+        console.log("SHould return new Storage Object")
         return new Storage({ projectId: process.env.GCP_TEAM_PROJECT_ID });
     }
-};
+}
 
+/* istanbul ignore next */
 function createBucket(storage: Storage) {
     if (!inDevelopment) {
         throw Error("Bucket not exist and we cannot automaticly create it in GCP")
@@ -31,9 +36,11 @@ function createBucket(storage: Storage) {
     console.log("Bucket created");
 }
 
+/* istanbul ignore next */
 export async function getBucket() {
-    const storage = getStorage();
     const bucketName = getBucketName();
+    console.log("after getBucketName " + bucketName);
+    const storage = getStorage();
 
     if (inDevelopment) {
         const [buckets] = await storage.getBuckets();
