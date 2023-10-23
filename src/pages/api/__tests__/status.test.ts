@@ -76,7 +76,7 @@ describe('API Status Route', () => {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "authorization": "Basic ZHB1c2VyOnRlc3Q="
+                "authorization": createAuth()
             },
             body: [{"hostname": "mismatch", "Domains":[{"domain": "failure"}]}]
         } as NextApiRequest;

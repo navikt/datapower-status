@@ -24,7 +24,7 @@ export async function downloadFile(filename: string) {
                 return content;
             }
         } else {
-            console.log("File not found")
+            console.log("File not found");
             return;
         }
     } catch (error) {
