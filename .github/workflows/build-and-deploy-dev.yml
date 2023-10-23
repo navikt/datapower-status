@@ -3,50 +3,39 @@ on:
   push:
     branches:
       - "dev"
+    paths-ignore:
+      - README.md
+      - CODEOWNERS
   workflow_dispatch:
-
-env:
-  IMAGE: ghcr.io/navikt/datapower-status:${{ github.sha }}
 
 jobs:
   "build":
     name: "build app and push"
     runs-on: "ubuntu-latest"
+    permissions:
+      contents: "read"
+      id-token: "write"
     steps:
-      - uses: "actions/checkout@v4"
-      - uses: "actions/setup-node@v3.8.1"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: nais/docker-build-push@v0
+        id: docker-push
         with:
-          node-version: 18
-      - name: "install dependencies and build application"
-        run: "yarn install --frozen-lockfile && yarn test && yarn build"
-      - name: build docker image
-        run: |
-          docker build --pull --tag ${{ env.IMAGE }}  .
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Push Docker image
-        run: |
-          docker push ${{ env.IMAGE }}
+          team: team-atom #
+          docker_context: . # optional, default .
+          push_image: true # optional, default true
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }} # required, but is defined as an organization variable
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }} # required, but is defined as an organization secret
 
-  "deployAppToDev":
-    name: "Deploy app to dev"
-    needs: "build"
-    runs-on: "ubuntu-latest"
-    steps:
-      - uses: "actions/checkout@v4"
-      - name: "Deploy to DEV"
-        uses: "nais/deploy/actions/deploy@master"
+      - name: Deploy dev-gcp
+        uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: "${{ secrets.NAIS_DEPLOY_APIKEY }}"
-          CLUSTER: "dev-gcp"
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
           RESOURCE: ".nais/nais.yaml"
-          VARS: ".nais/dev.yaml"
-          REF: ${{ env.COMMIT }}
-          IMAGE: ${{ env.IMAGE }}
+          VARS: nais/dev.yaml
+          VAR: image=${{ steps.docker-push.outputs.image }}
+
 #  "deployAlertsToDev":
 #    name: "Deploy alerts to dev"
 #    needs: "build"
