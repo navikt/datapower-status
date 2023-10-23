@@ -80,3 +80,11 @@ export interface DomainVersionSchema {
     host: string,
     version: string
 }
+
+
+export interface ErrorResponse {
+    error: string;
+}
+export interface SuccessResponse {
+    success: string;
+}

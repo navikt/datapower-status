@@ -4,22 +4,24 @@ import xss from "xss";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
-    let domain = xss(req.query.domain as string);
+    const domain = xss(req.query.domain as string);
     //console.log("domain index " + domain)
     switch (method) {
-        case "GET":
+        case "GET": {
             const content = await getDomainSyncStatus(domain);
             if (content == undefined) {
-                res.status(200).end(domain + " cannot find status");
+                res.status(200).json(domain + " cannot find status");
             } else if (content == false) {
-                res.status(200).end(domain + " is not in sync");
+                res.status(200).json(domain + " is not in sync");
             }else {
-                res.status(200).end(domain + " is in sync");
+                res.status(200).json(domain + " is in sync");
             }
             break;
-        default:
+        }
+        default: {
             res.setHeader('Allow', ['GET']);
             res.status(405).end(`Method ${method} Not Allowed`);
             break;
+        }
     }
 }

@@ -7,31 +7,40 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start:dependencies": "docker-compose up --build --remove-orphans fake-gcs-server"
+    "start:dependencies": "docker-compose up --build --remove-orphans fake-gcs-server",
+    "test": "jest"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@fontsource/roboto": "^4.5.7",
-    "@google-cloud/storage": "^6.8.0",
+    "@emotion/react": "^11.11.x",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@google-cloud/storage": "^7.3.1",
     "@mui/icons-material": "^5.14.x",
     "@mui/material": "^5.14.x",
     "@mui/system": "^5.14.x",
-    "axios": "^1.2.2",
-    "next": "13.2.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "axios": "^1.5.x",
+    "next": "^13.4.x",
+    "react": "^18.2.x",
+    "react-dom": "^18.2.x",
     "sanitize-filename-ts": "^1.0.2",
     "xss": "^1.0.14",
-    "zod": "^3.21.4"
+    "zod": "^3.22.x"
   },
   "devDependencies": {
     "@babel/core": "^7.x",
-    "@types/node": "18.15.x",
-    "@types/react": "18.0.x",
-    "@types/react-dom": "18.0.10",
-    "eslint": "8.31.0",
-    "eslint-config-next": "13.1.1",
-    "typescript": "4.9.4"
+    "@types/jest": "^29.5.x",
+    "@types/node": "^18.15.x",
+    "@types/react": "^18.2.x",
+    "@types/react-dom": "^18.2.x",
+    "@types/supertest": "^2.0.x",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.x",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.52.0",
+    "eslint-config-next": "^13.5.x",
+    "jest": "^29.7.x",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.x"
   }
 }
