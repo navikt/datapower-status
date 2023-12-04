@@ -18,7 +18,7 @@
     "@mui/icons-material": "^5.14.x",
     "@mui/material": "^5.14.x",
     "@mui/system": "^5.14.x",
-    "axios": "^1.5.x",
+    "axios": "^1.6.x",
     "next": "^13.4.x",
     "react": "^18.2.x",
     "react-dom": "^18.2.x",
