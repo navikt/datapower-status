@@ -1,7 +1,7 @@
 import type { NextApiRequest } from "next";
+const inDevelopment = process.env.NODE_ENV === 'development'
 
 export function withAuth(req: NextApiRequest) {
-    //console.log("Auth required");
     if (!req.headers || !req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
         return false;
     }
@@ -9,11 +9,12 @@ export function withAuth(req: NextApiRequest) {
     const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
 
-    console.log("withAuth", process.env.dpSecret)
+    if (inDevelopment){
+       console.log("withAuth", process.env.dpSecret)
+    }
     if (!(username === "dpuser" && password === process.env.dpSecret)) {
         return false;
     }
-    //console.log("Authorization accepted");
     return true;
 }
 
