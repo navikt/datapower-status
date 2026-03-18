@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start:dependencies": "docker-compose up -d --build --remove-orphans fake-gcs-server",
-    "stop:dependencies": "docker-compose down",
+    "start:dependencies": "docker compose up -d --build --remove-orphans fake-gcs-server",
+    "stop:dependencies": "docker compose down",
     "test": "jest"
   },
   "dependencies": {
@@ -19,7 +19,7 @@
     "@mui/icons-material": "7.3.6",
     "@mui/material": "7.3.6",
     "@mui/system": "7.3.6",
-    "axios": "1.13.2",
+    "axios": "1.13.6",
     "next": "15.5.9",
     "react": "19.2.1",
     "react-dom": "19.2.1",
