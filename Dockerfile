@@ -35,7 +35,7 @@
 #EXPOSE 8080
 #ENV NODE_ENV=production
 #CMD ["node", "server.js"]
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
