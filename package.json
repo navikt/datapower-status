@@ -20,7 +20,7 @@
     "@mui/material": "7.3.6",
     "@mui/system": "7.3.6",
     "axios": "1.15.0",
-    "next": "15.5.15",
+    "next": "15.5.18",
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "sanitize-filename-ts": "1.0.2",
