@@ -7,7 +7,10 @@ import Image from "next/image";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from 'react'
-import '@fontsource/roboto';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import { dpInstance } from '../libs/interfaces'
 import axios from 'axios';
 
