@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   fake-gcs-server:
     image: docker.io/fsouza/fake-gcs-server
@@ -7,4 +5,4 @@ services:
       - '4443:4443'
     command: -scheme http
     volumes:
-      - ./storage_data:/data
+      - ./storage_data:/storage:rw
