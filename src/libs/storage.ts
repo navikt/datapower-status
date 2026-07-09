@@ -188,14 +188,49 @@ export async function getAllDomains() {
 
 export async function getAllGroups() {
     const content = await getDownloadFileAsJSON(filenameGroups);
-    if (content) {
-        return Object.keys(content);
+    const realGroups = content ? Object.keys(content) : [];
+    return ["default", ...realGroups];
+}
+
+async function getUngroupedHostNames(): Promise<string[]> {
+    const groupContent = await getDownloadFileAsJSON(filenameGroups);
+    const statusContent = await getDownloadFileAsJSON(filenameStatus);
+
+    const allHosts: string[] = Array.isArray(statusContent)
+        ? statusContent.map((h: any) => h.dpInstance as string)
+        : [];
+
+    const groupedHosts = new Set<string>();
+    if (groupContent) {
+        for (const group of Object.keys(groupContent)) {
+            for (const host of getGroupHosts(groupContent, group)) {
+                groupedHosts.add(host);
+            }
+        }
     }
 
-    return null;
+    return allHosts.filter((h) => !groupedHosts.has(h));
 }
 
 export async function getGroup(group: string) {
+    if (group === "default") {
+        const hostNames = await getUngroupedHostNames();
+        const hosts = await Promise.all(hostNames.map(async (hostName: string) => {
+            const status = await getHostStatus(hostName);
+            return status || {
+                hostName,
+                dpInstance: hostName,
+                Version: "",
+                State: "",
+                uptime: "",
+                bootuptime2: "",
+                MachineType: "",
+                Domains: [],
+            };
+        }));
+        return { group: "default", hosts };
+    }
+
     const content = await getDownloadFileAsJSON(filenameGroups);
     if (content && group in content) {
         const hostNames = getGroupHosts(content, group);
@@ -353,14 +388,22 @@ export async function getHostGroup(host: string) {
 }
 
 export async function getGroupDomainComparison(group: string, domain: string): Promise<DomainVersionComparison | undefined> {
-    const groupContent = await getDownloadFileAsJSON(filenameGroups);
-    const statusContent = await getDownloadFileAsJSON(filenameStatus);
-
-    if (!groupContent || !(group in groupContent)) {
+    if (domain === "default") {
         return undefined;
     }
 
-    const hosts = getGroupHosts(groupContent, group);
+    const statusContent = await getDownloadFileAsJSON(filenameStatus);
+
+    let hosts: string[];
+    if (group === "default") {
+        hosts = await getUngroupedHostNames();
+    } else {
+        const groupContent = await getDownloadFileAsJSON(filenameGroups);
+        if (!groupContent || !(group in groupContent)) {
+            return undefined;
+        }
+        hosts = getGroupHosts(groupContent, group);
+    }
 
     // Extract versions from statusInfo.json for each host
     const hostVersions: DomainVersionComparisonEntry[] = hosts.map((host: string) => {

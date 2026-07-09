@@ -68,11 +68,13 @@ export default function GroupDomainSyncPanel() {
         // Fetch domain comparisons for all domains
         const comparisonsMap = new Map<string, DomainVersionComparison>();
         if (data.hosts && data.hosts.length > 0) {
-          // Extract unique domains from all hosts
+          // Extract unique domains from all hosts, skip "default" (never has a version)
           const uniqueDomains = new Set<string>();
           data.hosts.forEach((host: any) => {
             host.Domains?.forEach((d: any) => {
-              uniqueDomains.add(d.domain);
+              if (d.domain !== 'default') {
+                uniqueDomains.add(d.domain);
+              }
             });
           });
 

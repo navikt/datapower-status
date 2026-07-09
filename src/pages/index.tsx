@@ -52,8 +52,8 @@ export default function Index() {
 
       <ThemeProvider theme={theme}>
         <div className={styles.logo}>
-          <Image src="/images/nav-logo-red.svg" alt="Nav logo" width={75} height={75}  title="DataPower Status" />
-          <h1>Welcome to DataPower Status</h1>
+          <Image src="/images/nav-logo-red.svg" alt="Nav logo" width={83} height={53}   title="DataPower Status" />
+          <p>Welcome to DataPower Status</p>
         </div>
         <div className={styles.content}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, borderBottom: 1, borderColor: 'divider' }}>

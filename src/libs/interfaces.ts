@@ -1,26 +1,5 @@
 import { z } from "zod";
 
-export const statusSchemaZod = z.array( z.object({
-        dpInstance: z.string(),
-        State: z.string(),
-        Version: z.string(),
-        MachineType: z.string(),
-        Domains: z.array( z.object({
-            domain: z.string(),
-            mAdminState: z.string()
-        }) ),
-        uptime: z.string(),
-        bootuptime2: z.string()
-    }).required({
-        dpInstance: true,
-        State: true,
-        Version: true,
-        MachineType: true,
-        Domains: true,
-        uptime: true,
-        bootuptime2: true
-    }));
-
 export const hostMetadataSchemaZod = z.object({
     dpInstance: z.string(),
     State: z.string(),
@@ -43,7 +22,10 @@ export const hostMetadataSchemaZod = z.object({
         bootuptime2: true
     });
 
+export const statusSchemaZod = z.array( hostMetadataSchemaZod);
+
 export type HostMetadata = z.infer<typeof hostMetadataSchemaZod>;
+
 
 
 export type statusSchema = {

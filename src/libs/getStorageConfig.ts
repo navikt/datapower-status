@@ -39,7 +39,7 @@ function createBucket(storage: Storage) {
 /* istanbul ignore next */
 export async function getBucket() {
     const bucketName = getBucketName();
-    console.log("after getBucketName " + bucketName);
+    //console.log("after getBucketName " + bucketName);
     const storage = getStorage();
 
     if (inDevelopment) {

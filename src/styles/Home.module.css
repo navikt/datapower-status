@@ -108,17 +108,18 @@
 } */
 
 .logo {
-  /* height: 3em; */
-  display: block;
-  /* margin-left: 0.5rem; */
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 0.5rem;
-  /* padding-top: 1rem; */
-  /* margin-top: 0.5rem; */
 }
 
-.logo h1 {
+.logo p {
   display: inline-block;
-  margin: auto;
+  text-align: left;
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0;
 }
 
 
