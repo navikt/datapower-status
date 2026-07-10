@@ -13,21 +13,19 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { dpInstance } from '../libs/interfaces'
+
 import axios from 'axios';
-import { margin } from '@mui/system';
+import { dpInstance } from '../libs/interfaces';
 
 const theme = createTheme();
 
 export default function Index() {
-  console.log("Index component rendered");
 
   const [data, setData] = useState<dpInstance[]>([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
 
   const makeRequest = async () => {
-    console.log("Fetching new status")
     await axios.get('/api/status')
       .then(({ data }) => {
         setData(data);
@@ -36,8 +34,7 @@ export default function Index() {
   }
 
   useEffect(() => {
-    if ( !isDataFetched) {
-      console.log("data is not fetched")
+    if (!isDataFetched) {
       makeRequest();
     }
   }, [isDataFetched]);
@@ -64,11 +61,9 @@ export default function Index() {
             <IconButton
               color="primary"
               aria-label="refresh"
-              component="div"
               onClick={makeRequest}
               size="small"
-              edge="end"
-              className={styles.refresh}>
+              edge="end">
               <RefreshIcon />
             </IconButton>
           </Box>

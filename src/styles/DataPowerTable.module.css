@@ -34,10 +34,10 @@
     text-decoration: underline;
 }
 
-#active {
+.active {
     color: #ad0000;
 }
 
-#standby {
+.standby {
     color: #007c2e;
 }

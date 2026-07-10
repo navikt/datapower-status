@@ -96,11 +96,11 @@ export default function DomainListModal({ domains, dpInstanceName }: ModalProps)
         <Box sx={{
           position: 'absolute',
           top: '50%',
-          left: '30%',
+          left: '50%',
           transform: 'translate(-50%, -50%)',
           width: 400,
           height: "50%",
-          overflow: "scroll",
+          overflow: "auto",
           bgcolor: 'background.paper',
           border: '2px solid #000',
           boxShadow: 24,
