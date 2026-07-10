@@ -3,6 +3,7 @@ import handler from '../[host]';
 import * as gcsconfig from '../../../../../libs/getStorageConfig';
 import { Storage, Bucket, File } from '@google-cloud/storage';
 import { createAuth } from '../../../../../libs/testUtils/testHelper';
+import { clearJsonCache } from '../../../../../libs/storage';
 
 jest.mock('@google-cloud/storage');
 
@@ -12,6 +13,8 @@ describe('API domain/[domain]/[host] Route', () => {
   let mockBucket: jest.Mocked<Bucket>;
   let mockFile: jest.Mocked<File>;
   let mockStorage: jest.Mocked<Storage>;
+
+  beforeEach(() => clearJsonCache());
 
   beforeAll(() => {
     mockFile = {

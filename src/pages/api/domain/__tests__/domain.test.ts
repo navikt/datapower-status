@@ -2,12 +2,15 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import handler from '../index';
 import * as gcsconfig from '../../../../libs/getStorageConfig';
 import { Bucket } from '@google-cloud/storage';
+import { clearJsonCache } from '../../../../libs/storage';
 
 jest.mock('@google-cloud/storage');
 
 describe('API domain Route', () => {
   const inputData = '{"testDomain":{"versions":{"dp-02":"2.0.1"}},"testDomain2":{"versions":{"dp-01":"2.0.1"}}}'
  
+  beforeEach(() => clearJsonCache());
+
   beforeAll(() => {
     const mockBucket = {
       file: jest.fn(() => ({

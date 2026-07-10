@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import handler from '../sync';
 import * as gcsconfig from '../../../../../libs/getStorageConfig';
 import { Bucket, File } from '@google-cloud/storage';
+import { clearJsonCache } from '../../../../../libs/storage';
 
 jest.mock('@google-cloud/storage');
 
@@ -9,6 +10,9 @@ describe('API domain/[domain]/sync Route', () => {
   const inputData = '{"testDomain":{"versions":{"dp-01":"2.0.1","dp-02":"2.0.1"}},"testDomain2":{"versions":{"dp-01":"6.6.6"}}, "notinsyncDomain":{"versions":{"dp-01":"6.6.6","dp-02":"4.0.4"}}}'
   let mockBucket: Bucket;
   let mockFile: File;
+
+  beforeEach(() => clearJsonCache());
+
   beforeAll(() => {
     mockFile = {
         save: jest.fn(),

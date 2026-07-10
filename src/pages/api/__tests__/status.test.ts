@@ -3,6 +3,7 @@ import handler from '../status';
 import * as gcsconfig from '../../../libs/getStorageConfig';
 import { Bucket, File } from '@google-cloud/storage';
 import { createAuth } from '../../../libs/testUtils/testHelper';
+import { clearJsonCache } from '../../../libs/storage';
 
 jest.mock('@google-cloud/storage');
 
@@ -10,6 +11,7 @@ describe('API Status Route', () => {
     const inputData:string  = '[{"dpInstance": "hostname.example.com","State": "active","Version": "IDG.10.0.1.4","MachineType": "5725","Domains": [{"domain": "default", "mAdminState": "enabled"}],"uptime": "29 days 00:54:21","bootuptime2": "29 days 00:54:40"}]';
 
     beforeEach(() => {
+        clearJsonCache();
         const mockBucket = {
             file: jest.fn(() => ({
               save: jest.fn(),

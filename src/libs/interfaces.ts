@@ -1,17 +1,18 @@
 import { z } from "zod";
 
-export const statusSchemaZod = z.array( z.object({
-        dpInstance: z.string(),
-        State: z.string(),
-        Version: z.string(),
-        MachineType: z.string(),
-        Domains: z.array( z.object({
-            domain: z.string(),
-            mAdminState: z.string()
-        }) ),
-        uptime: z.string(),
-        bootuptime2: z.string()
-    }).required({
+export const hostMetadataSchemaZod = z.object({
+    dpInstance: z.string(),
+    State: z.string(),
+    Version: z.string(),
+    MachineType: z.string(),
+    Domains: z.array(z.object({
+        domain: z.string(),
+        mAdminState: z.string(),
+        version: z.string().optional()
+    })),
+    uptime: z.string(),
+    bootuptime2: z.string()
+}).required({
         dpInstance: true,
         State: true,
         Version: true,
@@ -19,7 +20,12 @@ export const statusSchemaZod = z.array( z.object({
         Domains: true,
         uptime: true,
         bootuptime2: true
-    }));
+    });
+
+export const statusSchemaZod = z.array( hostMetadataSchemaZod);
+
+export type HostMetadata = z.infer<typeof hostMetadataSchemaZod>;
+
 
 
 export type statusSchema = {
@@ -87,4 +93,43 @@ export interface ErrorResponse {
 }
 export interface SuccessResponse {
     success: string;
+}
+
+export interface HostGroup {
+    hosts: string[];
+}
+
+export interface GroupRegistry {
+    [group: string]: HostGroup;
+}
+
+export interface HostRecord {
+    hostName: string;
+    dpInstance: string;
+    Version: string;
+    State: string;
+    uptime: string;
+    bootuptime2: string;
+    MachineType: string;
+    Domains: Domain[];
+}
+
+export interface GroupHostsResponse {
+    group: string;
+    hosts: HostRecord[];
+}
+
+export interface DomainVersionComparisonEntry {
+    host: string;
+    version: string | null;
+    status: "match" | "different" | "missing";
+}
+
+export interface DomainVersionComparison {
+    group: string;
+    domain: string;
+    referenceVersion: string | null;
+    uniqueVersions: string[];
+    isSynced: boolean;
+    hosts: DomainVersionComparisonEntry[];
 }
