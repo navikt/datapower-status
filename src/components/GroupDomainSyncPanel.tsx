@@ -18,10 +18,11 @@ import {
   Tooltip,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { red, green } from '@mui/material/colors';
-import { GroupHostsResponse, DomainVersionComparison } from '../libs/interfaces';
+import { DomainVersionComparison } from '../libs/interfaces';
 
 interface DomainRow {
   domain: string;
@@ -33,6 +34,7 @@ export default function GroupDomainSyncPanel() {
   const [groups, setGroups] = useState<string[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string>('');
   const [hosts, setHosts] = useState<any[]>([]);
+  const [mAdminStateMap, setMAdminStateMap] = useState<Map<string, Map<string, string>>>(new Map());
   const [domainComparisons, setDomainComparisons] = useState<Map<string, DomainVersionComparison>>(new Map());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,6 +66,16 @@ export default function GroupDomainSyncPanel() {
       try {
         const { data } = await axios.get(`/api/groups/${selectedGroup}`);
         setHosts(data.hosts || []);
+
+        // Build mAdminState lookup: domain -> host -> mAdminState
+        const adminMap = new Map<string, Map<string, string>>();
+        (data.hosts || []).forEach((host: any) => {
+          host.Domains?.forEach((d: any) => {
+            if (!adminMap.has(d.domain)) adminMap.set(d.domain, new Map());
+            adminMap.get(d.domain)!.set(host.hostName, d.mAdminState);
+          });
+        });
+        setMAdminStateMap(adminMap);
 
         // Fetch domain comparisons for all domains
         const comparisonsMap = new Map<string, DomainVersionComparison>();
@@ -118,8 +130,19 @@ export default function GroupDomainSyncPanel() {
     );
   };
 
-  const versionCell = (entry: any) => {
-    if (entry?.version === null) {
+  const versionCell = (entry: any, mAdminState?: string) => {
+    if (mAdminState === 'disabled') {
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
+          <Tooltip title="disabled">
+            <CloseIcon sx={{ color: red[500]}} />
+          </Tooltip>
+          {entry?.version && <span>{entry.version}</span>}
+        </Box>
+      );
+    }
+
+    if (entry?.version === null || entry?.version === undefined) {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
           <Tooltip title="Version missing">
@@ -200,7 +223,7 @@ export default function GroupDomainSyncPanel() {
                     );
                     return (
                       <TableCell key={`${comparison.domain}-${host.hostName}`} align="center">
-                        {versionCell(entry)}
+                        {versionCell(entry, mAdminStateMap.get(comparison.domain)?.get(host.hostName))}
                       </TableCell>
                     );
                   })}
