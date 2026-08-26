@@ -14,8 +14,8 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
-    "@fontsource/roboto": "5.3.0",
-    "@google-cloud/storage": "7.21.x",
+    "@fontsource/roboto": "5.2.10",
+    "@google-cloud/storage": "8.0.x",
     "@mui/icons-material": "7.3.6",
     "@mui/material": "7.3.6",
     "@mui/system": "7.3.6",
