@@ -5,10 +5,16 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile  
-
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+# Install all dependencies (including devDependencies) on glibc so native modules work
+RUN \
+if [ -f package-lock.json ]; then npm ci; \
+  elif [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then pnpm i --frozen-lockfile; \
+  elif [ -f bun.lockb ]; then bun install --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+COPY . .
 
 # Rebuild the source code only when needed
 FROM base AS builder
