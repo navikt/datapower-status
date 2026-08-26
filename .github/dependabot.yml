@@ -19,13 +19,13 @@ updates:
     target-branch: "main"
     groups:
       mui-dependencies:
-        - "@mui/*"
+        patterns:
+          - "@mui/*"
       emotion-dependencies:
-        - "@emotion/*"
+        patterns:
+          - "@emotion/*"
     labels:
       - "npm"
       - "dependencies"
-    reviewers:
-      - "havtro"
     assignees:
       - "havtro"
