@@ -28,7 +28,7 @@
     "zod": "4.4.x"
   },
   "devDependencies": {
-    "@babel/core": "7.29.x",
+    "@babel/core": "8.0.x",
     "@types/jest": "30.0.0",
     "@types/node": "^25.9.x",
     "@types/react": "^19.2.x",
