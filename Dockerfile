@@ -1,25 +1,14 @@
-FROM node:25-alpine AS base
+FROM node:26-alpine AS base
 # Install dependencies only when needed
-FROM base AS deps
+
+FROM base AS builder
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
 # Install all dependencies (including devDependencies) on glibc so native modules work
-RUN \
-if [ -f package-lock.json ]; then npm ci; \
-  elif [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
-  elif [ -f pnpm-lock.yaml ]; then pnpm i --frozen-lockfile; \
-  elif [ -f bun.lockb ]; then bun install --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
-COPY . .
-
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+RUN npm install -g pnpm@10.16.1 && pnpm install --frozen-lockfile
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
@@ -27,7 +16,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN yarn test && yarn build
+RUN pnpm test && pnpm build
 
 # Production image, copy all the files and run next
 FROM base AS runner

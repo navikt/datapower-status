@@ -9,8 +9,9 @@ The application show a table with information
 
 ## Build and setup for local development
 
-- yarn install
-- yarn dev-start
+- pnpm install
+- pnpm start:dependencies
+- pnpm dev
 
 # API
 
