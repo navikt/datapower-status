@@ -2,6 +2,7 @@
   "name": "datapower-status",
   "version": "0.2.0",
   "private": true,
+  "packageManager": "pnpm@10.16.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -43,8 +44,5 @@
     "supertest": "^7.2.x",
     "ts-jest": "^29.4.x",
     "typescript": "^6.0.x"
-  },
-  "resolutions": {
-    "glob": "^10.5.0"
   }
 }
