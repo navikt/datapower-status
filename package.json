@@ -31,7 +31,7 @@
   "devDependencies": {
     "@babel/core": "8.0.x",
     "@types/jest": "30.0.0",
-    "@types/node": "^25.9.x",
+    "@types/node": "^26.4.x",
     "@types/react": "^19.2.x",
     "@types/react-dom": "^19.2.x",
     "@types/supertest": "7.2.0",
