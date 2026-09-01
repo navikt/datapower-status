@@ -5,10 +5,11 @@ FROM base AS builder
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
+ENV CI=true
 
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
 # Install all dependencies (including devDependencies) on glibc so native modules work
-RUN npm install -g pnpm@10.16.1 && pnpm install --frozen-lockfile
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
