@@ -1,2 +1,5 @@
+allowBuilds:
+  '@parcel/watcher': false
+  unrs-resolver: true
 overrides:
   glob: ^10.5.0
