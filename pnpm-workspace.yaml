@@ -3,3 +3,4 @@ allowBuilds:
   unrs-resolver: true
 overrides:
   glob: ^10.5.0
+  uuid: ^11.0.0
