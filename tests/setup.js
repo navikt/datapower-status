@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '.env.local.test' });
+process.env.dpSecret = 'test-only-dp-secret';
 
 /* module.exports = {
   config: {
