@@ -1,0 +1,9 @@
+.git
+.github
+node_modules
+.next
+build
+target
+*.md
+docker-compose*.yml
+.env*
