@@ -2,5 +2,6 @@ allowBuilds:
   '@parcel/watcher': false
   unrs-resolver: true
 overrides:
+  'brace-expansion@>=2.0.0 <2.1.7': ^2.1.7
   glob: ^10.5.0
   uuid: ^11.0.0
