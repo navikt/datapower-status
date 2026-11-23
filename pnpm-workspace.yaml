@@ -1,6 +1,15 @@
 allowBuilds:
   '@parcel/watcher': false
   unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@mui/core-downloads-tracker@9.6.0'
+  - '@mui/icons-material@9.6.0'
+  - '@mui/material@9.6.0'
+  - '@mui/private-theming@9.6.0'
+  - '@mui/styled-engine@9.6.0'
+  - '@mui/system@9.6.0'
+  - '@mui/types@9.6.0'
+  - '@mui/utils@9.6.0'
 overrides:
   'brace-expansion@>=2.0.0 <2.1.7': ^2.1.7
   glob: ^10.5.0
